@@ -40,10 +40,11 @@ At this point ArgoCD will now be managing itself.
 To access the ArgoCD UI, use:
 
 ```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 kubectl port-forward service/argocd-server -n argocd 8080:443
 ```
 
-You should now be able to access the UI on http://127.0.0.1:8080.
+You should now be able to access the UI on http://127.0.0.1:8080. The default username is _admin_ and the password is output to stdout after the first command.
 
 ### ArgoCD CRDs
 
