@@ -16,24 +16,17 @@ The app of apps pattern is used to deploy many ArgoCD applications together. The
 
 ### Bootstrap ArgoCD
 
-In the ArgoCD deployment, ArgoCD is deployed via Helm chart. To bootstrap the deployment it must initially be deployed to the cluster, so that it may manage its own deployment. This initial bootstrapping can be done manually, or it can be automated as part of the cluster setup.
-
-To install ArgoCD to the cluster manually:
+ArgoCD must first be deployed to the cluster in such a way that it manages itself. To do so, apply the kustomization that contains the ArgoCD application that watches the `self` eodhp-argocd-deployment (this repository), which also contains ArgoCD install manifest (referenced in the apps/argocd/kustomization.yaml file).
 
 ```bash
-helm repo add argocd https://argoproj.github.io/argo-helm
-helm install argocd argocd/argo-cd --version VERSION
+kubectl apply -k apps/argocd
 ```
 
-Ensure that VERSION matches the version stated in the relevant _apps/\*\*/argocd/argocd.yaml_ `spec.source.targetRevision` for your deployment environment.
+At this point ArgoCD will now be:
 
-Once you have installed ArgoCD to the cluster you can then apply the root app manifest to the cluster:
-
-```bash
-kubectl apply -f app.yaml
-```
-
-At this point ArgoCD will now be managing itself.
+- Deployed to the cluster.
+- Watching this repo for changes.
+- Managing all of the apps in _apps/_, including its own deployment.
 
 ### ArgoCD UI
 
