@@ -35,6 +35,16 @@ kubectl apply -f app.yaml
 
 At this point ArgoCD will now be managing itself.
 
+### ArgoCD UI
+
+To access the ArgoCD UI, use:
+
+```bash
+kubectl port-forward service/argocd-server -n argocd 8080:443
+```
+
+You should now be able to access the UI on http://127.0.0.1:8080.
+
 ### ArgoCD CRDs
 
 All ArgoCD Application CRD manifests should be deployed to the namespace ArgoCD, e.g. Any Application CRDs. Otherwise, they will not be picked up and implemented by ArgoCD.
