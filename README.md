@@ -6,13 +6,11 @@ This is the deployment repo for the UK EO DataHub Platform. The deployment uses 
 
 The applications deployed by this repo are designed to be managed by the ArgoCD GitOps framework. This deployment follows the app of apps pattern, where there is one "root" app that points to many child apps.
 
-One of the apps deployed is ArgoCD itself, so that ArgoCD manages itself. For this to work, ArgoCD must already be installed on the cluster, manually or otherwise, to which the root app is deployed. After that, ArgoCD will manage its own deployment.
-
-The version of ArgoCD bootstrapped in the cluster must match that of the root app.
+One of the apps deployed is ArgoCD itself, so that ArgoCD manages itself. See Boostrap ArgoCD.
 
 ### App of Apps
 
-The app of apps pattern is used to deploy many ArgoCD applications together. The root app, _app.yaml_, points to a target Git repository and revision containing the source of truth for the application deployment. The target repo is the deployment's own repository. An additional path points to more applications within the repository, which are then deployed as child applications of the root app.
+The app of apps pattern is used to deploy many ArgoCD applications together. The root app, _apps/argocd/apps.yaml_, points to a target Git repository and revision containing the source of truth for the application deployment. The target repo is the deployment's own repository. An additional path points to more applications within the repository, which are then deployed as child applications of the root app.
 
 ### Bootstrap ArgoCD
 
@@ -21,6 +19,8 @@ ArgoCD must first be deployed to the cluster in such a way that it manages itsel
 ```bash
 kubectl apply -k apps/argocd
 ```
+
+Due to the presence of CRD definitions required by some manifests, it may be necessary to run the above command twice.
 
 At this point ArgoCD will now be:
 
