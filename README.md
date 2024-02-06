@@ -17,10 +17,9 @@ The app of apps pattern is used to deploy many ArgoCD applications together. The
 ArgoCD must first be deployed to the cluster in such a way that it manages itself. To do so, apply the kustomization that contains the ArgoCD application that watches the `self` eodhp-argocd-deployment (this repository), which also contains ArgoCD install manifest (referenced in the apps/argocd/kustomization.yaml file).
 
 ```bash
-kubectl apply -k apps/argocd
+kubectl apply -k apps/argocd  # install argocd
+kubectl apply -k eodhp/       # install argocd applications
 ```
-
-Due to the presence of CRD definitions required by some manifests, it may be necessary to run the above command twice.
 
 At this point ArgoCD will now be:
 
