@@ -10,6 +10,8 @@ spec:
         revision: feature/EODHP-121-add-e-ox-view-server-to-platform
         directories:
           - path: "apps/*"
+          - path: "apps/argocd"
+            exclude: true
   template:
     metadata:
       name: "{{path.basenameNormalized}}"
