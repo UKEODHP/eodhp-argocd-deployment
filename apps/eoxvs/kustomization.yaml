@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: eoxviewserver
+
+resources:
+  - namespace.yaml
+  - redis-pvc.yaml
+
+helmCharts:
+  - name: vs
+    repo: https://charts-public.hub.eox.at/
+    releaseName: eoxviewserver
+    version: 4.3.0
+    valuesFile: values.yaml
+
+patches:
+  - target:
+      kind: Ingress
+    path: ingress.patch.yaml
+  - target:
+      kind: Ingress
+      name: eoxviewserver-*
+    path: pathtype.patch.yaml

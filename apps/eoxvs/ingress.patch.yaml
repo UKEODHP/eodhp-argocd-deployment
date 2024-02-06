@@ -1,0 +1,5 @@
+# update resource catalogue to use spec.ingressClassName instead of annotation
+# "kubernetes.io/ingress.class"
+- op: add
+  path: /spec/ingressClassName
+  value: nginx

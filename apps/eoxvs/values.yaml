@@ -1,0 +1,1135 @@
+# environment variables which are needed for the services
+global:
+  env:
+    DEBUG: "false"
+    GDAL_DISABLE_READDIR_ON_OPEN: "TRUE"
+    COLLECT_STATIC: "false"
+    GDAL_PAM_ENABLED: "NO"
+    #### SHOULD BE CHANGED IN PROD ####
+    DB_NAME: dbname
+    DB_PORT: "5432"
+    DB_PW: dbpw
+    DB_USER: dbuser
+    POSTGRES_DB: dbname
+    POSTGRES_PASSWORD: dbpw
+    POSTGRES_USER: dbuser
+    DJANGO_MAIL: office@eox.at
+    DJANGO_PASSWORD: djangopw
+    DJANGO_USER: djangouser
+    REDIS_PORT: "6379"
+    REDIS_PREPROCESS_QUEUE_KEY: preprocess_queue
+    REDIS_REGISTER_QUEUE_KEY: register_queue
+    REDIS_SEED_QUEUE_KEY: seed_queue
+    REDIS_HARVESTER_QUEUE_KEY: harvester_queue
+  dbsync:
+    create: true
+    replace: false
+    delete: false
+  storage:
+    # storage parameters
+    #  - data is a mapping for name:config for the registrar and preprocessor
+    #     services
+    #  - source is the data source of the data for the preprocessor
+    #  - target is a target destination for the preprocessor - if not existing
+    #     it will be the same as data
+    #  - cache is the target for the cache, by default its local for development
+    data:
+      data:
+        type: http
+        endpoint_url: https://dap.ceda.ac.uk/
+        streaming: false
+    cache:
+      type: local
+  collections:
+    S2L1C:
+      product_types:
+        - S2MSI1C
+        - S2ARDCLOUDS
+      coverage_types:
+        - S2L1C_B01
+        - S2L1C_B02
+        - S2L1C_B03
+        - S2L1C_B04
+        - S2L1C_B05
+        - S2L1C_B06
+        - S2L1C_B07
+        - S2L1C_B08
+        - S2L1C_B8A
+        - S2L1C_B09
+        - S2L1C_B10
+        - S2L1C_B11
+        - S2L1C_B12
+        - S2L1C_CLOUD
+        - S2L1C_CLOUDPROB
+        - S2L1C_COG
+    UKCP:
+      product_types:
+        - UKCPCLT
+      coverage_types:
+        - UKCP_2060
+        - UKCP_2080
+  productTypes:
+    - name: S2ARDCLOUDS
+      filter:
+        "s2:product_type": S2ARDCLOUDS
+      collections:
+        - S2L1C
+      metadata_assets: []
+      defaultBrowse: TRUE_COLOR
+      browses:
+        CLOUD:
+          grey:
+            expression: cloud/1
+            range: [1, 2]
+        CLOUD_PROB:
+          grey:
+            expression: cloud_probability/1
+            range: [0, 100]
+        TRUE_COLOR_CLOUD:
+          red:
+            expression: cloud/1
+            range: [0, 400]
+          green:
+            expression: cloud/1
+            range: [0, 400]
+          blue:
+            expression: cloud/1
+            range: [0, 400]
+        TRUE_COLOR_CLOUD_PROB:
+          red:
+            expression: cloud_probability/1
+            range: [0, 400]
+          green:
+            expression: cloud_probability/1
+            range: [0, 400]
+          blue:
+            expression: cloud_probability/1
+            range: [0, 400]
+        TRUE_COLOR:
+          red:
+            expression: B04/1
+            range: [0, 400]
+          green:
+            expression: B03/1
+            range: [0, 400]
+          blue:
+            expression: B02/1
+            range: [0, 400]
+        FALSE_COLOR:
+          red:
+            expression: B08
+            range: [0, 4000]
+            nodata: 0
+          green:
+            expression: B04
+            range: [0, 4000]
+            nodata: 0
+          blue:
+            expression: B03
+            range: [0, 4000]
+            nodata: 0
+      coverages:
+        S2L1C_CLOUD:
+          assets:
+            - cloud
+        S2L1C_CLOUDPROB:
+          assets:
+            - cloud_probability
+        S2L1C_COG:
+          assets:
+            - cog
+    - name: S2MSI1C
+      filter:
+        "s2:product_type": S2MSI1C
+      collections:
+        - S2L1C
+      metadata_assets: []
+      defaultBrowse: TRUE_COLOR
+      browses:
+        TRUE_COLOR:
+          red:
+            expression: B04
+            range: [0, 4000]
+            nodata: 0
+          green:
+            expression: B03
+            range: [0, 4000]
+            nodata: 0
+          blue:
+            expression: B02
+            range: [0, 4000]
+            nodata: 0
+        FALSE_COLOR:
+          red:
+            expression: B08
+            range: [0, 4000]
+            nodata: 0
+          green:
+            expression: B04
+            range: [0, 4000]
+            nodata: 0
+          blue:
+            expression: B03
+            range: [0, 4000]
+            nodata: 0
+        NDVI:
+          grey:
+            expression: (B08-B04)/(B08+B04)
+            range: [-1, 1]
+      coverages:
+        S2L1C_B01:
+          assets:
+            - B01
+        S2L1C_B02:
+          assets:
+            - B02
+        S2L1C_B03:
+          assets:
+            - B03
+        S2L1C_B04:
+          assets:
+            - B04
+        S2L1C_B05:
+          assets:
+            - B05
+        S2L1C_B06:
+          assets:
+            - B06
+        S2L1C_B07:
+          assets:
+            - B07
+        S2L1C_B08:
+          assets:
+            - B08
+        S2L1C_B8A:
+          assets:
+            - B8A
+        S2L1C_B09:
+          assets:
+            - B09
+        S2L1C_B10:
+          assets:
+            - B10
+        S2L1C_B11:
+          assets:
+            - B11
+        S2L1C_B12:
+          assets:
+            - B12
+      masks:
+        - name: clouds
+          validity: false
+    - name: UKCPCLT
+      filter:
+        "s2:product_type": UKCP
+      collections:
+        - S2L1C
+      metadata_assets: []
+      defaultBrowse: CLT
+      browses:
+        CLT:
+          grey:
+            expression: clt/clt
+            range: [0, 100]
+            nodata: 1.0000000200408773e+20
+        CLT_2:
+          grey:
+            expression: clt/1
+            range: [0, 100]
+            nodata: 1.0000000200408773e+20
+      coverages:
+        UKCP_2060:
+          assets:
+            - clt
+        UKCP_2080:
+          assets:
+            - clt
+  defaultLayer:
+  layers:
+    - id: S2L1C
+      title: Sentinel-2 Level 1C True Color
+      abstract: Sentinel-2 Level 2A True Color
+      displayColor: "#eb3700"
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+      search:
+        histogramBinCount: 15
+        histogramThreshold: 80
+    - id: S2L1C__TRUE_COLOR
+      title: Sentinel-2 Level 1C True Color for images (B0X definitions)
+      abstract: Sentinel-2 Level 2A True Color
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: S2L1C__TRUE_COLOR_CLOUD
+      title: Sentinel-2 ARD Cloud data projected to true colour (RGB)
+      abstract: Sentinel-2 Level 2A True Color
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: S2L1C__TRUE_COLOR_2
+      title: Sentinel-2 Level 1C True Color for images (not used)
+      abstract: Sentinel-2 Level 2A True Color
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: S2L1C__CLOUD
+      title: Sentinel-2 ARD Clouds greyscale projection
+      abstract: Sentinel-2 Level 1C True Color with cloud masks
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: S2L1C__TRUE_COLOR_CLOUD_PROB
+      title: Sentinel-2 ARD Cloud Probability data projected to true colour (RGB)
+      abstract: Sentinel-2 Level 1C False Color
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: S2L1C__CLOUD_PROB
+      title: Sentinel-2 ARD Cloud Probability greyscale projection
+      abstract: Sentinel-2 ARD Clouds
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: S2L1C__FALSE_COLOR
+      title: Sentinel-2 False Colour for images (B0X definitions)
+      abstract: Sentinel-2 ARD Clouds
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: S2L1C__NDVI
+      title: Sentinel-2 NDVI calculation
+      abstract: Sentinel-2 ARD Clouds
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: S2L1C
+    - id: UKCP
+      title: UK Climate projection CLT
+      abstract: Sentinel-2 Level 2A True Color
+      displayColor: "#eb3700"
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: UKCP
+      search:
+        histogramBinCount: 15
+        histogramThreshold: 80
+    - id: UKCP__CLT
+      title: UK Climate Projections CLT/CLT
+      abstract: Sentinel-2 Level 2A True Color
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: UKCP
+    - id: UKCP__CLT_2
+      title: UK Climate Projections CLT/1
+      abstract: Sentinel-2 Level 2A True Color
+      grids:
+        - name: WGS84
+          zoom: 13
+      parentLayer: UKCP
+  overlayLayers: []
+  coverageTypes:
+    - data_type: "Uint16"
+      name: "S2L1C_CLOUD"
+      bands:
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "Cloud"
+          gdal_interpretation: "Band 1"
+          identifier: "cloud"
+          name: "cloud"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          "uom": "W/m2/um"
+          "wavelength": 442.7
+    - data_type: "Uint16"
+      name: "S2L1C_CLOUDPROB"
+      bands:
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "cloud_probability"
+          gdal_interpretation: "Band 1"
+          identifier: "cloud_probability"
+          name: "cloud_probability"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          "uom": "W/m2/um"
+          "wavelength": 442.7
+    - data_type: "Uint16"
+      name: "S2L1C_COG"
+      bands:
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B02"
+          gdal_interpretation: "Band 1"
+          identifier: "B02"
+          name: "blue"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 1633
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B03"
+          gdal_interpretation: "Band 2"
+          identifier: "B03"
+          name: "green"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 1768
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B04"
+          gdal_interpretation: "Band 3"
+          identifier: "B04"
+          name: "red"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 1966
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B05"
+          gdal_interpretation: "Band 4"
+          identifier: "B05"
+          name: ""
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 2054
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B06"
+          gdal_interpretation: "Band 5"
+          identifier: "B06"
+          name: ""
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 2128
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B07"
+          gdal_interpretation: "Band 6"
+          identifier: "B07"
+          name: ""
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 2147
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B08"
+          gdal_interpretation: "Band 7"
+          identifier: "B08"
+          name: "nir"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 2053
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B8A"
+          gdal_interpretation: "Band 8"
+          identifier: "B8A"
+          name: "nir08"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 2220
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B11"
+          gdal_interpretation: "Band 9"
+          identifier: "B11"
+          name: "swir16"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 6575
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "B12"
+          gdal_interpretation: "Band 10"
+          identifier: "B12"
+          name: "swir22"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 0
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 1
+              - 10730
+    - data_type: "Uint16"
+      name: "UKCP_2060"
+      bands:
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "Clt"
+          gdal_interpretation: "undefined"
+          identifier: "clt"
+          name: "clt"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 1.00000002004087734e+20
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 0
+              - 100
+    - data_type: "Uint16"
+      name: "UKCP_2080"
+      bands:
+        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
+          description: "Clt"
+          gdal_interpretation: "undefined"
+          identifier: "clt"
+          name: "clt"
+          nil_values:
+            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
+              value: 9.96920996838686905e+36
+          uom: "W.m-2.Sr-1"
+          significant_figures: 5
+          allowed_value_ranges:
+            - - 0
+              - 100
+  disableDefaultCoverageTypes: false
+  rasterStyles:
+    []
+    # example
+    # - name: "blackwhite"
+    #   type: "ramp"
+    #   title: "BlackWhite"
+    #   abstract: "From Black to White"
+    #   colorEntries:
+    #     - value: 0
+    #       color: #000000
+    #       opacity: 1
+    #       label: Black
+    #     - value: 1
+    #       color: #FFFFFF
+    #       opacity: 1
+    #       label: White
+  metadata:
+    {}
+    # any metadata relevant for services
+    #
+  ingress:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      cert-manager.io/cluster-issuer: letsencrypt
+    hosts:
+      - host: vs.dev.eodhp.eco-ke-staging.com
+    tls:
+      - hosts:
+          - vs.dev.eodhp.eco-ke-staging.com
+        secretName: vs-secret
+      # hosts and tls will be redefined always
+    prefix:
+      enabled: false
+      value: ""
+
+# general gdal related settings
+gdal:
+  allowedExtensions:
+    enabled: false # This will be null in the future to enforce overriding
+    value: ".tif,.xml"
+
+database:
+  #### SHOULD BE CHANGED IN PROD ####
+  auth:
+    username: dbuser
+    password: dbpw
+    database: dbname
+    postgresPassword: dbpgpw
+  primary:
+    persistence:
+      enabled: false
+      existingClaim: data-access-db
+    extendedConfiguration: "max_connections=3000"
+    initdb:
+      scripts:
+        enablePostgis.sh: |
+          echo "Enabling postgis"
+          PGPASSWORD="${POSTGRES_POSTGRES_PASSWORD}" psql -U postgres -d "${POSTGRES_DB}" -c "CREATE EXTENSION postgis;"
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: "1.5"
+      memory: 6Gi
+    requests:
+      cpu: "0.1"
+      memory: 0.5Gi
+  affinity: {}
+
+redis:
+  usePassword: false
+  persistence:
+    existingClaim: data-access-redis # rename to persistent volume claim
+  master:
+    persistence:
+      enabled: true
+      storageClass: standard #managed-nfs-storage
+  cluster:
+    enabled: false
+
+client:
+  replicaCount: 1
+  nameOverride:
+  fullNameOverride:
+
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/client
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  imagePullSecrets: []
+
+  config:
+    # client time can be set to ISO 8601 datetime or following "special times":
+    # "today", "customClientDatePast1", "customClientDatePast2", "customClientDatePast3", "customClientDatePast4"
+    # "customClientDateFuture1", "customClientDateFuture2", "customClientDateFuture3", "customClientDateFuture4"
+    # configured respectively by customClientDaysPast1 and customClientDaysFuture1 etc. to create a date by adding/subtracting x days from today's date
+    # example values:
+    # customClientDaysPast1: 30
+    # customClientDaysFuture1: 3
+    # selectedTimeDomain:
+    #   - customClientDatePast1
+    #   - customClientDateFuture1
+    timeDomain:
+      - "2020-01-01T00:00:00Z"
+      - "2080-12-31T23:59:59Z"
+    displayTimeDomain:
+      - "2022-01-01T00:00:00Z"
+      - "2024-12-31T23:59:59Z"
+    displayInterval: P1096D
+    selectedTimeDomain:
+      - "2023-01-01T00:00:00Z"
+      - "2023-12-31T23:59:59Z"
+    selectableInterval: P1096D
+    center:
+      - 12
+      - 49
+    zoom: 5
+    minZoom: 1
+    maxZoom: 17
+    serviceUrl: "" # vs renderer/cache services url - if not set, either global.ingress.tls[0].hosts[0] is used or JS window.location.hostname as fallback
+    clientHeaderHTML: '<header id="header" style="width: 100%; height:70px; position:absolute;"><h3 style="width:100%; text-align:center; color: #006699;">PRISM View Server (PVS) Client powered by <a href="//eox.at"><img src="//eox.at/EOX_Logo.svg" alt="EOX" style="height:25px;margin-left:10px"/></a></h3></header>'
+    clientHeaderHeight: 70px
+    leftPanelOpen: true
+    rightPanelOpen: true
+    leftPanelTabIndex: 1
+    rightPanelTabIndex: 0
+    tutorial: once
+    enable3D: false
+    mapMode: 2D
+    terrainUrl: ""
+    uploadEnabled: true
+    areaFilterLayerExtent: false
+    selectFilesDownloadEnabled: false
+    downloadEnabled: true
+    searchEnabled: true
+    disableTimeSlider: false
+    enableDynamicHistogram: false
+    timeSliderAlternativeBrush: false
+    searchDebounceTime: 500
+    language: "en"
+    timeSliderControls: true
+    enableSingleLayerMode: false
+    maxTooltips: 1
+    disableSearchParams: false
+    enableGetEOCoverageSet: true
+    maxSocketsPerHostSearch: 6
+    eoxserverDownloadEnabled: false
+    footprintFillColor: "rgba(0, 0, 0, 0.2)"
+    footprintStrokeColor: "rgba(0, 0, 0, 1)"
+    filterFillColor: "rgba(0, 165, 255, 0)"
+    filterStrokeColor: "rgba(0, 165, 255, 1)"
+    filterOutsideColor: "rgba(0, 0, 0, 0.5)"
+    selectedFootprintFillColor: "rgba(255, 0, 0, 0.2)"
+    selectedFootprintStrokeColor: "rgba(255, 0, 0, 1)"
+    highlightFillColor: "rgba(246, 182, 0, 0.5)"
+    highlightStrokeColor: "rgba(246, 182, 0, 1)"
+    highlightStrokeWidth: 3
+    translations:
+      {
+        "en":
+          {
+            "Cloud Cover": "Cloud coverage (%)",
+            "Error: NoApplicableCode": "Search timed out. Please refine the filter criteria.",
+          },
+      }
+    filterSettings:
+      time:
+        hidden: true
+    downloadFormats:
+      [
+        { "name": "TIFF", "mimeType": "image/tiff" },
+        { "name": "JPEG 2000", "mimeType": "image/jp2" },
+        { "name": "HDF", "mimeType": "application/x-hdf" },
+      ]
+    multiDownloadFormats:
+      [
+        { "name": "ZIP", "mimeType": "application/zip" },
+        { "name": "TAR", "mimeType": "application/tar" },
+        { "name": "GZIP", "mimeType": "application/gzip" },
+      ]
+    downloadProjections:
+      [
+        {
+          "name": "WGS-84",
+          "identifier": "http://www.opengis.net/def/crs/EPSG/0/4326",
+        },
+        {
+          "name": "Web Mercator",
+          "identifier": "http://www.opengis.net/def/crs/EPSG/0/3857",
+        },
+        {
+          "name": "ETRS89 / LAEA Europe",
+          "identifier": "http://www.opengis.net/def/crs/EPSG/0/3035",
+        },
+      ]
+    downloadInterpolations:
+      [
+        {
+          "name": "Bilinear",
+          "identifier": "http://www.opengis.net/def/interpolation/OGC/1/bilinear",
+        },
+        {
+          "name": "Nearest Neighbour",
+          "identifier": "http://www.opengis.net/def/interpolation/OGC/1/nearest-neighbour",
+        },
+        {
+          "name": "Average",
+          "identifier": "http://www.opengis.net/def/interpolation/OGC/1/average",
+        },
+      ]
+    baseLayers:
+      [
+        {
+          "id": "terrain-light",
+          "displayName": "EOX Terrain-Light",
+          "display":
+            {
+              "id": "terrain-light",
+              "visible": true,
+              "protocol": "WMTS",
+              "urls":
+                [
+                  "//a.s2maps-tiles.eu/wmts/",
+                  "//b.s2maps-tiles.eu/wmts/",
+                  "//c.s2maps-tiles.eu/wmts/",
+                  "//d.s2maps-tiles.eu/wmts/",
+                  "//e.s2maps-tiles.eu/wmts/",
+                ],
+              "description": '<div><b>EOX Terrain Light</b> Tile service provides an idea of land usage and topography. It is based on following public data: <ul class="list-unstyled"><li><a href="//openstreetmap.org/copyright" target="_blank">OpenStreetMap</a></li><li><a href="//naturalearthdata.com/about/terms-of-use/" target="_blank">NaturalEarth public domain</a></li><li><a href="//gebco.net" target="_blank">GEBCO</a></li><li><a href="//asterweb.jpl.nasa.gov/gdem.asp" target="_blank">ASTER GDEM</a></li><li><a href="//lta.cr.usgs.gov/GTOPO30" target="_blank">GTOPO30</a></li></ul><p>More information on: <a href="//s2maps.eu/" target="_blank">s2maps.eu</a> and <a href="//maps.eox.at" target="_blank">maps.eox.at</a></p></div>',
+              "infoPopup:": true,
+              "matrixSet": "WGS84",
+              "format": "image/png",
+              "projection": "EPSG:4326",
+              "style": "default",
+              "attribution": 'Terrain-Light { Data &copy; <a href="//openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors and <a href=''javascript:;'' onClick=''toggle(terrain_attribution)''>others</a>, Rendering &copy; <a href="//eox.at" target="_blank">EOX</a> }',
+            },
+        },
+        {
+          "id": "terrain",
+          "displayName": "EOX Terrain",
+          "display":
+            {
+              "id": "terrain",
+              "visible": false,
+              "protocol": "WMTS",
+              "urls":
+                [
+                  "//a.s2maps-tiles.eu/wmts/",
+                  "//b.s2maps-tiles.eu/wmts/",
+                  "//c.s2maps-tiles.eu/wmts/",
+                  "//d.s2maps-tiles.eu/wmts/",
+                  "//e.s2maps-tiles.eu/wmts/",
+                ],
+              "infoPopup:": true,
+              "description": '<div><b>EOX Terrain</b> Tile service provides an idea of land usage and topography. It is based on following public data: <ul class="list-unstyled"><li><a href="//openstreetmap.org/copyright" target="_blank">OpenStreetMap</a></li><li><a href="//naturalearthdata.com/about/terms-of-use/" target="_blank">NaturalEarth public domain</a></li><li><a href="//nasa.gov" target="_blank">NASA SRTM</a></li><li>EUDEM</li><li><a href="//lta.cr.usgs.gov/GTOPO30" target="_blank">GTOPO30</a></li><li><a href="//due.esrin.esa.int/page_globcover.php" target="_blank">GlobCover</a></li></ul><p>More information on: <a href="//s2maps.eu/" target="_blank">s2maps.eu</a> and <a href="//maps.eox.at" target="_blank">maps.eox.at</a></p></div>',
+              "matrixSet": "WGS84",
+              "format": "image/png",
+              "projection": "EPSG:4326",
+              "style": "default",
+              "attribution": 'Terrain { Data &copy; <a href="//openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors and <a href=''javascript:;'' onClick=''toggle(terrain_attribution)''>others</a>, Rendering &copy; <a href="//eox.at" target="_blank">EOX</a> }',
+            },
+        },
+        {
+          "id": "s2cloudless",
+          "displayName": "EOX Sentinel-2 cloudless",
+          "display":
+            {
+              "id": "s2cloudless-2021",
+              "visible": false,
+              "protocol": "WMTS",
+              "urls":
+                [
+                  "//a.s2maps-tiles.eu/wmts/",
+                  "//b.s2maps-tiles.eu/wmts/",
+                  "//c.s2maps-tiles.eu/wmts/",
+                  "//d.s2maps-tiles.eu/wmts/",
+                  "//e.s2maps-tiles.eu/wmts/",
+                ],
+              "infoPopup:": true,
+              "description": '<div><p><b>EOX Sentinel-2 cloudless</b> Tile service providing an (almost) cloudless map of the world, crafted by EOX.</p><p>Uses Sentinel-2 L2A data for land surfaces, coastal waters and some islands as specified by the ESA (varies throughout the years) and a custom bathymetry render fills the oceans.</p><p>More information on: <a href="//s2maps.eu/" target="_blank">s2maps.eu</a> and <a href="//maps.eox.at" target="_blank">maps.eox.at</a></p></div>',
+              "matrixSet": "WGS84",
+              "format": "image/png",
+              "projection": "EPSG:4326",
+              "style": "default",
+              "attribution": '<a xmlns:dct="//purl.org/dc/terms/" href="//s2maps.eu" property="dct:title">Sentinel-2 cloudless - //s2maps.eu</a> by <a xmlns:cc="//creativecommons.org/ns#" href="s://eox.at" property="cc:attributionName" rel="cc:attributionURL">EOX IT Services GmbH</a> (Contains modified Copernicus Sentinel data 2021)',
+            },
+        },
+      ]
+    overlayLayers:
+      [
+        {
+          "id": "overlay_base",
+          "displayName": "EOX Borders and Labels",
+          "display":
+            {
+              "id": "overlay_base",
+              "visible": false,
+              "protocol": "WMTS",
+              "urls":
+                [
+                  "//a.s2maps-tiles.eu/wmts/",
+                  "//b.s2maps-tiles.eu/wmts/",
+                  "//c.s2maps-tiles.eu/wmts/",
+                  "//d.s2maps-tiles.eu/wmts/",
+                  "//e.s2maps-tiles.eu/wmts/",
+                ],
+              "infoPopup:": true,
+              "description": '<div><b>EOX Overlay base</b> Tile service shows labels and line features like borders or streets to provide more detailed information. It is based on following public data: <ul class="list-unstyled"><li><a href="//openstreetmap.org/copyright" target="_blank">OpenStreetMap</a></li><li><a href="//naturalearthdata.com/about/terms-of-use/" target="_blank">NaturalEarth public domain</a></li></ul><p>More information on: <a href="//s2maps.eu/" target="_blank">s2maps.eu</a> and <a href="//maps.eox.at" target="_blank">maps.eox.at</a></p></div>',
+              "matrixSet": "WGS84",
+              "style": "default",
+              "format": "image/png",
+              "projection": "EPSG:4326",
+              "attribution": 'Overlay { Data &copy; <a href="//openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors, Rendering &copy; <a href="//eox.at" target="_blank">EOX</a> and <a href="//github.com/mapserver/basemaps" target="_blank">MapServer</a> }',
+            },
+        },
+      ]
+    tutorialHrefHtml: "https://vs.pages.eox.at/documentation/user/main"
+    tutorialHrefPDF: "https://vs.pages.eox.at/documentation/user/View-Server_-_User-Guide.pdf"
+  service:
+    type: ClusterIP
+    port: 80
+
+  resources:
+    limits:
+      cpu: 0.5
+      memory: 1Gi
+    requests:
+      cpu: 0.1
+      memory: 100Mi
+
+  affinity: {}
+
+  livenessProbe:
+    failureThreshold: 3
+    tcpSocket:
+      port: 8080
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+
+  ingress:
+    enabled: true
+
+cache:
+  replicaCount: 1
+  nameOverride:
+  fullNameOverride:
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/cache
+    pullPolicy: IfNotPresent
+    tag: ""
+  imagePullSecrets: []
+  config:
+    wmsEnabled: true
+    wmtsEnabled: true
+    connectionTimeout: 10
+    timeout: 120
+    expires: 3600
+    key: /{tileset}/{grid}/{dim}/{z}/{x}/{y}.{ext}
+    extra_key: /{tileset}/{grid}/{z}/{x}/{y}.{ext}
+  service:
+    type: ClusterIP
+    port: 80
+  resources:
+    limits:
+      cpu: 0.5
+      memory: 1Gi
+    requests:
+      cpu: 0.1
+      memory: 100Mi
+  livenessProbe:
+    failureThreshold: 3
+    tcpSocket:
+      port: 8080
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+  affinity: {}
+  ingress:
+    enabled: true
+
+renderer:
+  nameOverride:
+  fullNameOverride:
+
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/core
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  livenessProbe:
+    failureThreshold: 3
+    tcpSocket:
+      port: 80
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+
+  imagePullSecrets: []
+
+  replicaCount: 1
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 3
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  resources:
+    limits:
+      cpu: 1.5
+      memory: 6Gi
+    requests:
+      cpu: 0.5
+      memory: 0.5Gi
+
+  affinity: {}
+
+  volumeMounts: []
+  volumes: []
+
+  ingress:
+    enabled: true
+
+  config:
+    enableHttpAccess: false
+
+dbsync:
+  nameOverride:
+  fullNameOverride:
+
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/core
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  imagePullSecrets: []
+
+  replicaCount: 1
+
+  resources:
+    limits:
+      cpu: 0.5
+      memory: 1Gi
+    requests:
+      cpu: 0.25
+      memory: 0.25Gi
+
+  affinity: {}
+
+  volumeMounts: []
+  volumes: []
+
+preprocessor:
+  replicaCount: 0
+  nameOverride:
+  fullNameOverride:
+
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/preprocessor
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  imagePullSecrets: []
+
+  secrets: []
+
+  resources:
+    limits:
+      cpu: 1.5
+      memory: 6Gi
+    requests:
+      cpu: 0.5
+      memory: 0.5Gi
+
+  affinity: {}
+
+  config:
+    collections: {} # Mapping of collections to process
+    filesystems: {} # Mapping of filesystem configurations
+    paths: {} # Mapping of paths
+    processors: {} # Mapping of processor configurations
+
+  volumes: []
+  volumeMounts: []
+
+registrar:
+  replicaCount: 1
+  nameOverride:
+  fullNameOverride:
+
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/core
+    pullPolicy: IfNotPresent
+    tag: ""
+
+  imagePullSecrets: []
+
+  resources:
+    limits:
+      cpu: 1.5
+      memory: 6Gi
+    requests:
+      cpu: 0.5
+      memory: 0.5Gi
+
+  affinity: {}
+
+  volumeMounts: []
+  volumes: []
+  config:
+    disableDefaultRoute: false
+    eoxserverInstanceBasePath: "/var/www/pvs/dev"
+    eoxserverInstanceName: "pvs_instance"
+    defaultQueue: "register"
+    defaultSuccessQueue:
+    defaultErrorQueue:
+    defaultReplace: true
+
+    defaultHandlers:
+    routes: {}
+
+harvester:
+  replicaCount: 1
+  nameOverride:
+  fullNameOverride:
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/harvester
+    pullPolicy: IfNotPresent
+    tag: ""
+  imagePullSecrets: []
+  secrets: []
+  config:
+    harvesters: {}
+  resources:
+    limits:
+      cpu: 1.5
+      memory: 6Gi
+    requests:
+      cpu: 0.5
+      memory: 0.5Gi
+  affinity: {}
+  volumes: []
+  volumeMounts: []
+
+scheduler:
+  replicaCount: 1
+  nameOverride:
+  fullNameOverride:
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/scheduler
+    pullPolicy: IfNotPresent
+    tag: ""
+  imagePullSecrets: []
+  config:
+    schedules: []
+  resources:
+    limits:
+      cpu: 1.5
+      memory: 6Gi
+    requests:
+      cpu: 0.5
+      memory: 0.5Gi
+  affinity: {}
+  volumes: []
+  volumeMounts: []
+
+seeder:
+  replicaCount: 1
+  nameOverride:
+  fullNameOverride:
+  image:
+    repository: registry.gitlab.eox.at/vs/vs/seeder
+    pullPolicy: IfNotPresent
+    tag: ""
+  imagePullSecrets: []
+  config:
+    wmsEnabled: true
+    wmtsEnabled: true
+    connectionTimeout: 10
+    timeout: 120
+    expires: 3600
+    key: /{tileset}/{grid}/{dim}/{z}/{x}/{y}.{ext}
+    cache_extra_key: /{tileset}/{grid}/{z}/{x}/{y}.{ext}
+    # seeder-specific config
+    minzoom: 0
+    maxzoom: 10
+    collection_grids: {}
+  resources:
+    limits:
+      cpu: 0.5
+      memory: 1Gi
+    requests:
+      cpu: 0.1
+      memory: 100Mi
+  affinity: {}
