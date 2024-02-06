@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: eodhp
-  namespace: argocd 
+  namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -12,12 +12,12 @@ spec:
     server: https://kubernetes.default.svc
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: HEAD
+    targetRevision: feature/EODHP-121-add-e-ox-view-server-to-platform
     path: apps/
   syncPolicy:
     automated:
-      prune: false 
-      selfHeal: true 
+      prune: false
+      selfHeal: true
       allowEmpty: false
     syncOptions:
       - CreateNamespace=true
