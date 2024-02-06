@@ -43,6 +43,9 @@ patches:
       - op: replace
         path: /spec/rules/0/http/paths/0/path
         value: /
+      - op: add
+        path: /metadata/annotations/alb.ingress.kubernetes.io~1group.order
+        value: 100
   - target:
       kind: Ingress
       name: eoxvs-cache
