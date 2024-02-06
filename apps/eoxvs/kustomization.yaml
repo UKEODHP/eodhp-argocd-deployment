@@ -45,15 +45,15 @@ patches:
         value: /
   - target:
       kind: Ingress
-      name: eoxvs-renderer
-    patch: |-
-      - op: replace
-        path: /spec/rules/0/http/paths/0/path
-        value: /(ows|opensearch|admin|coverages/metadata)
-  - target:
-      kind: Ingress
       name: eoxvs-cache
     patch: |-
       - op: replace
         path: /spec/rules/0/http/paths/0/path
         value: /cache/
+  - target:
+      kind: Ingress
+      name: eoxvs-renderer
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/http/paths/0/path
+        value: /admin
