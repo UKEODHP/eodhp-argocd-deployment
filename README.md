@@ -8,9 +8,9 @@ The applications deployed by this repo are designed to be managed by the ArgoCD 
 
 One of the apps deployed is ArgoCD itself, so that ArgoCD manages itself. See Boostrap ArgoCD.
 
-### App of Apps
+### Apps
 
-The app of apps pattern is used to deploy many ArgoCD applications together. The root app, _apps/argocd/apps.yaml_, points to a target Git repository and revision containing the source of truth for the application deployment. The target repo is the deployment's own repository. An additional path points to more applications within the repository, which are then deployed as child applications of the root app.
+Apps are managed as an ArgoCD ApplicationSet from the eodhp/ directory. The ArgoCD deployment has its own Application manifest as it requires different sync options to avoid deleting ArgoCD from the cluster when the application is uninstalled.
 
 ### Bootstrap ArgoCD
 
