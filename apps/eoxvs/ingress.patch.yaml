@@ -1,5 +1,7 @@
 # update resource catalogue to use spec.ingressClassName instead of annotation
 # "kubernetes.io/ingress.class"
+- op: remove
+  path: /metadata/annotations/kubernetes.io~1ingress.class
 - op: add
   path: /spec/ingressClassName
   value: alb
