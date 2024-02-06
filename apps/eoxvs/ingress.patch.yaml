@@ -2,4 +2,15 @@
 # "kubernetes.io/ingress.class"
 - op: add
   path: /spec/ingressClassName
-  value: nginx
+  value: alb
+
+# add annotations for aws-load-balancer-controller
+- op: add
+  path: /metadata/annotations/alb.ingress.kubernetes.io~1scheme
+  value: internet-facing
+- op: add
+  path: /metadata/annotations/alb.ingress.kubernetes.io~1target-type
+  value: ip
+- op: add
+  path: /metadata/annotations/alb.ingress.kubernetes.io~1group.name
+  value: eodhp
