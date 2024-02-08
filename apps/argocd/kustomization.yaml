@@ -4,6 +4,11 @@ kind: Kustomization
 namespace: argocd
 
 resources:
-- https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.5/manifests/install.yaml
-- apps.yaml
-- namespace.yaml
+  - namespace.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.9.5/manifests/install.yaml
+
+configMapGenerator:
+  - name: argocd-cm
+    behavior: merge
+    literals:
+      - kustomize.buildOptions=--enable-helm

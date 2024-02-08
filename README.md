@@ -8,25 +8,32 @@ The applications deployed by this repo are designed to be managed by the ArgoCD 
 
 One of the apps deployed is ArgoCD itself, so that ArgoCD manages itself. See Boostrap ArgoCD.
 
-### App of Apps
+### Apps
 
-The app of apps pattern is used to deploy many ArgoCD applications together. The root app, _apps/argocd/apps.yaml_, points to a target Git repository and revision containing the source of truth for the application deployment. The target repo is the deployment's own repository. An additional path points to more applications within the repository, which are then deployed as child applications of the root app.
+Apps are managed as an ArgoCD ApplicationSet from the eodhp/ directory. The ArgoCD deployment has its own Application manifest as it requires different sync options to avoid deleting ArgoCD from the cluster when the application is uninstalled.
 
 ### Bootstrap ArgoCD
 
 ArgoCD must first be deployed to the cluster in such a way that it manages itself. To do so, apply the kustomization that contains the ArgoCD application that watches the `self` eodhp-argocd-deployment (this repository), which also contains ArgoCD install manifest (referenced in the apps/argocd/kustomization.yaml file).
 
 ```bash
-kubectl apply -k apps/argocd
+kubectl apply -k apps/argocd  # install argocd
+kubectl apply -k eodhp/       # install argocd applications
 ```
-
-Due to the presence of CRD definitions required by some manifests, it may be necessary to run the above command twice.
 
 At this point ArgoCD will now be:
 
 - Deployed to the cluster.
 - Watching this repo for changes.
 - Managing all of the apps in _apps/_, including its own deployment.
+
+### Delete EODHP
+
+To remove EODHP from the cluster run:
+
+```bash
+kubectl delete -k eodhp/
+```
 
 ### ArgoCD UI
 

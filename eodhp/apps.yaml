@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: eodhp
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
+        revision: feature/EODHP-121-add-e-ox-view-server-to-platform
+        directories:
+          - path: "apps/*"
+          - path: "apps/argocd"
+            exclude: true
+  template:
+    metadata:
+      name: "{{path.basenameNormalized}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
+        targetRevision: feature/EODHP-121-add-e-ox-view-server-to-platform
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{path.basenameNormalized}}"
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - allowEmpty=true
