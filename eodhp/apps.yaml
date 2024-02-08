@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        revision: feature/EODHP-121-add-e-ox-view-server-to-platform
+        revision: HEAD
         directories:
           - path: "apps/*"
           - path: "apps/argocd"
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        targetRevision: feature/EODHP-121-add-e-ox-view-server-to-platform
+        targetRevision: HEAD
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
