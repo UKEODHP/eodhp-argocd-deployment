@@ -27,6 +27,14 @@ At this point ArgoCD will now be:
 - Watching this repo for changes.
 - Managing all of the apps in _apps/_, including its own deployment.
 
+### Delete EODHP
+
+To remove EODHP from the cluster run:
+
+```bash
+kubectl delete -k eodhp/
+```
+
 ### ArgoCD UI
 
 To access the ArgoCD UI, use:
