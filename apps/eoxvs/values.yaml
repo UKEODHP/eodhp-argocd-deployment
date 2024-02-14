@@ -33,6 +33,12 @@ global:
     #  - target is a target destination for the preprocessor - if not existing
     #     it will be the same as data
     #  - cache is the target for the cache, by default its local for development
+    # data:
+    #   data:
+    #     type: directory
+    #     root_directory: /var/vs/storage/data/
+    # cache:
+    #   type: local
     data:
       data:
         type: http
@@ -62,12 +68,6 @@ global:
         - S2L1C_CLOUD
         - S2L1C_CLOUDPROB
         - S2L1C_COG
-    UKCP:
-      product_types:
-        - UKCPCLT
-      coverage_types:
-        - UKCP_2060
-        - UKCP_2080
   productTypes:
     - name: S2ARDCLOUDS
       filter:
@@ -79,41 +79,21 @@ global:
       browses:
         CLOUD:
           grey:
-            expression: cloud/1
+            expression: cloud
             range: [1, 2]
         CLOUD_PROB:
           grey:
-            expression: cloud_probability/1
+            expression: cloud_probability
             range: [0, 100]
-        TRUE_COLOR_CLOUD:
-          red:
-            expression: cloud/1
-            range: [0, 400]
-          green:
-            expression: cloud/1
-            range: [0, 400]
-          blue:
-            expression: cloud/1
-            range: [0, 400]
-        TRUE_COLOR_CLOUD_PROB:
-          red:
-            expression: cloud_probability/1
-            range: [0, 400]
-          green:
-            expression: cloud_probability/1
-            range: [0, 400]
-          blue:
-            expression: cloud_probability/1
-            range: [0, 400]
         TRUE_COLOR:
           red:
-            expression: B04/1
+            expression: B04
             range: [0, 400]
           green:
-            expression: B03/1
+            expression: B03
             range: [0, 400]
           blue:
-            expression: B02/1
+            expression: B02
             range: [0, 400]
         FALSE_COLOR:
           red:
@@ -128,6 +108,10 @@ global:
             expression: B03
             range: [0, 4000]
             nodata: 0
+        NDVI:
+          grey:
+            expression: (B08-B04)/(B08+B04)
+            range: [-1, 1]
       coverages:
         S2L1C_CLOUD:
           assets:
@@ -219,31 +203,6 @@ global:
       masks:
         - name: clouds
           validity: false
-    - name: UKCPCLT
-      filter:
-        "s2:product_type": UKCP
-      collections:
-        - S2L1C
-      metadata_assets: []
-      defaultBrowse: CLT
-      browses:
-        CLT:
-          grey:
-            expression: clt/clt
-            range: [0, 100]
-            nodata: 1.0000000200408773e+20
-        CLT_2:
-          grey:
-            expression: clt/1
-            range: [0, 100]
-            nodata: 1.0000000200408773e+20
-      coverages:
-        UKCP_2060:
-          assets:
-            - clt
-        UKCP_2080:
-          assets:
-            - clt
   defaultLayer:
   layers:
     - id: S2L1C
@@ -258,49 +217,28 @@ global:
         histogramBinCount: 15
         histogramThreshold: 80
     - id: S2L1C__TRUE_COLOR
-      title: Sentinel-2 Level 1C True Color for images (B0X definitions)
-      abstract: Sentinel-2 Level 2A True Color
-      grids:
-        - name: WGS84
-          zoom: 13
-      parentLayer: S2L1C
-    - id: S2L1C__TRUE_COLOR_CLOUD
-      title: Sentinel-2 ARD Cloud data projected to true colour (RGB)
-      abstract: Sentinel-2 Level 2A True Color
-      grids:
-        - name: WGS84
-          zoom: 13
-      parentLayer: S2L1C
-    - id: S2L1C__TRUE_COLOR_2
-      title: Sentinel-2 Level 1C True Color for images (not used)
+      title: Sentinel-2 Level 1C True Color for images
       abstract: Sentinel-2 Level 2A True Color
       grids:
         - name: WGS84
           zoom: 13
       parentLayer: S2L1C
     - id: S2L1C__CLOUD
-      title: Sentinel-2 ARD Clouds greyscale projection
+      title: Sentinel-2 ARD Clouds
       abstract: Sentinel-2 Level 1C True Color with cloud masks
       grids:
         - name: WGS84
           zoom: 13
       parentLayer: S2L1C
-    - id: S2L1C__TRUE_COLOR_CLOUD_PROB
-      title: Sentinel-2 ARD Cloud Probability data projected to true colour (RGB)
-      abstract: Sentinel-2 Level 1C False Color
-      grids:
-        - name: WGS84
-          zoom: 13
-      parentLayer: S2L1C
     - id: S2L1C__CLOUD_PROB
-      title: Sentinel-2 ARD Cloud Probability greyscale projection
+      title: Sentinel-2 ARD Cloud Probability
       abstract: Sentinel-2 ARD Clouds
       grids:
         - name: WGS84
           zoom: 13
       parentLayer: S2L1C
     - id: S2L1C__FALSE_COLOR
-      title: Sentinel-2 False Colour for images (B0X definitions)
+      title: Sentinel-2 False Colour for images
       abstract: Sentinel-2 ARD Clouds
       grids:
         - name: WGS84
@@ -313,31 +251,6 @@ global:
         - name: WGS84
           zoom: 13
       parentLayer: S2L1C
-    - id: UKCP
-      title: UK Climate projection CLT
-      abstract: Sentinel-2 Level 2A True Color
-      displayColor: "#eb3700"
-      grids:
-        - name: WGS84
-          zoom: 13
-      parentLayer: UKCP
-      search:
-        histogramBinCount: 15
-        histogramThreshold: 80
-    - id: UKCP__CLT
-      title: UK Climate Projections CLT/CLT
-      abstract: Sentinel-2 Level 2A True Color
-      grids:
-        - name: WGS84
-          zoom: 13
-      parentLayer: UKCP
-    - id: UKCP__CLT_2
-      title: UK Climate Projections CLT/1
-      abstract: Sentinel-2 Level 2A True Color
-      grids:
-        - name: WGS84
-          zoom: 13
-      parentLayer: UKCP
   overlayLayers: []
   coverageTypes:
     - data_type: "Uint16"
@@ -499,38 +412,6 @@ global:
           allowed_value_ranges:
             - - 1
               - 10730
-    - data_type: "Uint16"
-      name: "UKCP_2060"
-      bands:
-        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
-          description: "Clt"
-          gdal_interpretation: "undefined"
-          identifier: "clt"
-          name: "clt"
-          nil_values:
-            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
-              value: 1.00000002004087734e+20
-          uom: "W.m-2.Sr-1"
-          significant_figures: 5
-          allowed_value_ranges:
-            - - 0
-              - 100
-    - data_type: "Uint16"
-      name: "UKCP_2080"
-      bands:
-        - definition: "http://www.opengis.net/def/property/OGC/0/Radiance"
-          description: "Clt"
-          gdal_interpretation: "undefined"
-          identifier: "clt"
-          name: "clt"
-          nil_values:
-            - reason: "http://www.opengis.net/def/nil/OGC/0/unknown"
-              value: 9.96920996838686905e+36
-          uom: "W.m-2.Sr-1"
-          significant_figures: 5
-          allowed_value_ranges:
-            - - 0
-              - 100
   disableDefaultCoverageTypes: false
   rasterStyles:
     []
@@ -639,7 +520,7 @@ client:
     #   - customClientDateFuture1
     timeDomain:
       - "2020-01-01T00:00:00Z"
-      - "2080-12-31T23:59:59Z"
+      - "2025-12-31T23:59:59Z"
     displayTimeDomain:
       - "2022-01-01T00:00:00Z"
       - "2024-12-31T23:59:59Z"
@@ -649,9 +530,9 @@ client:
       - "2023-12-31T23:59:59Z"
     selectableInterval: P1096D
     center:
-      - 12
-      - 49
-    zoom: 5
+      - -3.5
+      - 53.2
+    zoom: 7
     minZoom: 1
     maxZoom: 17
     serviceUrl: "" # vs renderer/cache services url - if not set, either global.ingress.tls[0].hosts[0] is used or JS window.location.hostname as fallback
