@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        revision: HEAD
+        revision: bugfix/EODHP-156-automate-efs-file-system-id-in-argo-cd
         directories:
           - path: "apps/*"
           - path: "apps/argocd"
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        targetRevision: HEAD
+        targetRevision: bugfix/EODHP-156-automate-efs-file-system-id-in-argo-cd
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
