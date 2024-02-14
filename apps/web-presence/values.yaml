@@ -1,11 +1,11 @@
-app_url: web.eodhp.eco-ke-staging.com
+app_url: web.dev.eodhp.eco-ke-staging.com
 
 database:
   sql_user: "admin"
   sql_password: "password"
 
 ingress:
-  host: web.eodhp.eco-ke-staging.com
+  host: web.dev.eodhp.eco-ke-staging.com
 
 resource_catalogue:
   version: v1.2.3
