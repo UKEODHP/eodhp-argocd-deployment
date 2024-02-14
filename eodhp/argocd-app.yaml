@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: bugfix/EODHP-156-automate-efs-file-system-id-in-argo-cd
+    targetRevision: HEAD
     path: apps/argocd
   syncPolicy:
     automated:
