@@ -3,6 +3,7 @@ app_url: web.dev.eodhp.eco-ke-staging.com
 database:
   sql_user: "admin"
   sql_password: "password"
+  number_of_replicas: 1
 
 ingress:
   host: web.dev.eodhp.eco-ke-staging.com
