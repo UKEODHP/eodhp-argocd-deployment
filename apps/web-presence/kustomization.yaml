@@ -12,3 +12,24 @@ helmCharts:
     releaseName: web-presence
     version: 0.1.0
     valuesFile: values.yaml
+
+patches:
+  - target:
+      kind: Ingress
+    patch: |-
+      # update resource catalogue to use spec.ingressClassName instead of annotation
+      # "kubernetes.io/ingress.class"
+      - op: replace
+        path: /spec/ingressClassName
+        value: alb
+
+      # add annotations for aws-load-balancer-controller
+      - op: add
+        path: /metadata/annotations/alb.ingress.kubernetes.io~1scheme
+        value: internet-facing
+      - op: add
+        path: /metadata/annotations/alb.ingress.kubernetes.io~1target-type
+        value: ip
+      - op: add
+        path: /metadata/annotations/alb.ingress.kubernetes.io~1group.name
+        value: eodhp
