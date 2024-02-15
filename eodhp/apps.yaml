@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        revision: HEAD
+        revision: feature/EODHP-120-Display-data-pointed-to-by-public-CEDA-STAC-item-in-map-view
         directories:
           - path: "apps/*"
           - path: "apps/argocd"
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        targetRevision: HEAD
+        targetRevision: feature/EODHP-120-Display-data-pointed-to-by-public-CEDA-STAC-item-in-map-view
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc

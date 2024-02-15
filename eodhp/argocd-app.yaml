@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: HEAD
+    targetRevision: feature/EODHP-120-Display-data-pointed-to-by-public-CEDA-STAC-item-in-map-view
     path: apps/argocd
   syncPolicy:
     automated:
