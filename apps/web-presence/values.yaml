@@ -1,4 +1,4 @@
-app_url: web.dev.eodhp.eco-ke-staging.com
+app_url: dev.eodhp.eco-ke-staging.com
 
 database:
   sql_user: "admin"
@@ -6,7 +6,7 @@ database:
   number_of_replicas: 1
 
 ingress:
-  host: web.dev.eodhp.eco-ke-staging.com
+  host: dev.eodhp.eco-ke-staging.com
 
 resource_catalogue:
   version: v1.2.3
