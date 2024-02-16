@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: bugfix/EODHP-152-e-ox-vs-ingress-rules-break-aws-policy
+    targetRevision: HEAD
     path: apps/argocd
   syncPolicy:
     automated:
