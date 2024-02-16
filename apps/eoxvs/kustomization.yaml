@@ -62,28 +62,28 @@ patches:
         value:
           - backend:
               service:
-                name: eoxviewserver-renderer
+                name: eoxvs-renderer
                 port:
                   number: 80
             path: /ows
             pathType: Prefix
           - backend:
               service:
-                name: eoxviewserver-renderer
+                name: eoxvs-renderer
                 port:
                   number: 80
             path: /opensearch
             pathType: Prefix
           - backend:
               service:
-                name: eoxviewserver-renderer
+                name: eoxvs-renderer
                 port:
                   number: 80
             path: /admin
             pathType: Prefix
           - backend:
               service:
-                name: eoxviewserver-renderer
+                name: eoxvs-renderer
                 port:
                   number: 80
             path: /coverages/metadata
