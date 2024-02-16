@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: feature/EODHP-120-Display-data-pointed-to-by-public-CEDA-STAC-item-in-map-view
+    targetRevision: git checkout -b EODHP-169-swap-aws-alb-controller-for-nginx-ingress-controller
     path: apps/argocd
   syncPolicy:
     automated:
