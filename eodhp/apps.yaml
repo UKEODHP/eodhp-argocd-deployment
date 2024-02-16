@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        revision: git checkout -b EODHP-169-swap-aws-alb-controller-for-nginx-ingress-controller
+        revision: bugfix/EODHP-169-swap-aws-alb-controller-for-nginx-ingress-controller
         directories:
           - path: "apps/*"
           - path: "apps/argocd"
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        targetRevision: git checkout -b EODHP-169-swap-aws-alb-controller-for-nginx-ingress-controller
+        targetRevision: bugfix/EODHP-169-swap-aws-alb-controller-for-nginx-ingress-controller
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
