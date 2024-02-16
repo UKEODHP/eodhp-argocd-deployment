@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        revision: feature/EODHP-10-deploy-cms-to-argocd
+        revision: HEAD
         directories:
           - path: "apps/*"
           - path: "apps/argocd"
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        targetRevision: feature/EODHP-10-deploy-cms-to-argocd
+        targetRevision: HEAD
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
