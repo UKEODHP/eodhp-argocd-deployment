@@ -52,11 +52,39 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/http/paths/0/path
-        value: /cache/
+        value: /cache
   - target:
       kind: Ingress
       name: eoxvs-renderer
     patch: |-
       - op: replace
-        path: /spec/rules/0/http/paths/0/path
-        value: /admin
+        path: /spec/rules/0/http/paths
+        value:
+          - backend:
+              service:
+                name: eoxviewserver-renderer
+                port:
+                  number: 80
+            path: /ows
+            pathType: Prefix
+          - backend:
+              service:
+                name: eoxviewserver-renderer
+                port:
+                  number: 80
+            path: /opensearch
+            pathType: Prefix
+          - backend:
+              service:
+                name: eoxviewserver-renderer
+                port:
+                  number: 80
+            path: /admin
+            pathType: Prefix
+          - backend:
+              service:
+                name: eoxviewserver-renderer
+                port:
+                  number: 80
+            path: /coverages/metadata
+            pathType: Prefix
