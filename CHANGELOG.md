@@ -8,3 +8,11 @@
 
 - Refactored directory structure and bootstrap procedure to fix ArgoCD stability issues
 - Added EOxVS and removed the demo guestbook app
+
+## v0.3.0
+
+- Added web presence app (content management system)
+
+## v0.3.1
+
+- Swapped AWS ALB for Ingress Nginx Controller due to limitations of AWS ALB routing (no rewrites)
