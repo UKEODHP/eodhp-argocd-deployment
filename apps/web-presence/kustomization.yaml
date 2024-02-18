@@ -12,3 +12,18 @@ helmCharts:
     releaseName: web-presence
     version: 0.1.0
     valuesFile: values.yaml
+
+patches:
+  - target:
+      kind: Ingress
+    patch: |-
+      # Set TLS secret name
+      - op: add
+        path: /spec/tls
+        value: 
+          - hosts: 
+              - dev.eodhp.eco-ke-staging.com
+            secretName: lets-encrypt
+      - op: add
+        path: /metadata/annotations/cert-manager.io~1cluster-issuer
+        value: lets-encrypt
