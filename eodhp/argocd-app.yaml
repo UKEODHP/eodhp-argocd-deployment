@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: HEAD
+    targetRevision: bugfix/EODHP-169-swap-aws-alb-controller-for-nginx-ingress-controller
     path: apps/argocd
   syncPolicy:
     automated:
