@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: feature/EODHP-74-deploy-cert-manager-and-ca-to-cluster
+    targetRevision: feature/EODHP-145-adequate-kubernetes-secrets-management
     path: apps/argocd
   syncPolicy:
     automated:

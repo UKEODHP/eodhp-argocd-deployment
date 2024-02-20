@@ -7,7 +7,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        revision: feature/EODHP-74-deploy-cert-manager-and-ca-to-cluster
+        revision: feature/EODHP-145-adequate-kubernetes-secrets-management
         directories:
           - path: "apps/*"
           - path: "apps/argocd"
@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        targetRevision: feature/EODHP-74-deploy-cert-manager-and-ca-to-cluster
+        targetRevision: feature/EODHP-145-adequate-kubernetes-secrets-management
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
