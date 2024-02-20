@@ -5,6 +5,7 @@ namespace: web
 
 resources:
   - namespace.yaml
+  - secrets.yaml
 
 helmCharts:
   - name: eodhp-web-presence
