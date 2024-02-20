@@ -17,13 +17,15 @@ Apps are managed as an ArgoCD ApplicationSet from the eodhp/ directory. The Argo
 ArgoCD must first be deployed to the cluster in such a way that it manages itself. To do so, apply the kustomization that contains the ArgoCD application that watches the `self` eodhp-argocd-deployment (this repository), which also contains ArgoCD install manifest (referenced in the apps/argocd/kustomization.yaml file).
 
 ```bash
-kubectl apply -k apps/argocd  # install argocd
-kubectl apply -k eodhp/       # install argocd applications
+kubectl apply -k apps/argocd        # install argocd
+kubectl apply -k eodhp/envs/<env>   # install argocd applications
 ```
+
+Ensure your kubectl context is set correctly before deploying the argocd applications.
 
 At this point ArgoCD will now be:
 
-- Deployed to the cluster.
+- Deployed to the target cluster.
 - Watching this repo for changes.
 - Managing all of the apps in _apps/_, including its own deployment.
 
@@ -32,7 +34,7 @@ At this point ArgoCD will now be:
 To remove EODHP from the cluster run:
 
 ```bash
-kubectl delete -k eodhp/
+kubectl delete -k eodhp/envs/<env>
 ```
 
 ### ArgoCD UI

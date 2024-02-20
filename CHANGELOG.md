@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.4.0
+
+- Updated repo directory structure to support multi environment deployments
+
 ## v0.3.2
 
 - Demonstrated importing secret in web-presence from secret-store
