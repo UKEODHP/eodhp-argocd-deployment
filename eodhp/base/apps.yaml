@@ -14,7 +14,7 @@ spec:
             exclude: true
   template:
     metadata:
-      name: "{{path.basenameNormalized}}"
+      name: "{{path[1]}}"
     spec:
       project: default
       source:
@@ -23,7 +23,7 @@ spec:
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{path.basenameNormalized}}"
+        namespace: "{{path[1]]}}"
       syncPolicy:
         automated:
           allowEmpty: true
