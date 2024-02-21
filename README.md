@@ -49,3 +49,19 @@ You should now be able to access the UI on http://127.0.0.1:8080. The default us
 ### ArgoCD CRDs
 
 All ArgoCD Application CRD manifests should be deployed to the namespace ArgoCD, e.g. Any Application CRDs. Otherwise, they will not be picked up and implemented by ArgoCD.
+
+## Cluster Prerequisites
+
+The EO DataHub Platform deployment expects the following resources to be available on the cluster.
+
+### Storage Classes
+
+- "file-storage" : for NFS like file system storage that can be shared between pods.
+
+### Ingress Class
+
+- "nginx" : The ingress-nginx (https://kubernetes.github.io/ingress-nginx) ingress controller.
+
+### Secret Stores
+
+- "secret-store" : A ClusterSecretStore from external-secrets helm chart (https://charts.external-secrets.io).
