@@ -7,23 +7,23 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        revision: feature/EODHP-145-adequate-kubernetes-secrets-management
+        revision: INJECT_REVISION
         directories:
-          - path: "apps/*"
+          - path: "INJECT_PATH"
           - path: "apps/argocd"
             exclude: true
   template:
     metadata:
-      name: "{{path.basenameNormalized}}"
+      name: "{{path[1]}}"
     spec:
       project: default
       source:
         repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-        targetRevision: feature/EODHP-145-adequate-kubernetes-secrets-management
+        targetRevision: INJECT_REVISION
         path: "{{path}}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{path.basenameNormalized}}"
+        namespace: "{{path[1]]}}"
       syncPolicy:
         automated:
           allowEmpty: true
