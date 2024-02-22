@@ -14,10 +14,3 @@ helmCharts:
     version: 17.3.6
     valuesFile: "values.yaml"
 
-patches:
-  - target:
-      kind: Ingress
-    patch: |-
-      - op: add
-        path: /metadata/annotations/cert-manager.io~1cluster-issuer
-        value: lets-encrypt
