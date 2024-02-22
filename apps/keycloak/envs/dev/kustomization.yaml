@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: keycloak
+
+resources:
+  - ../../base
+  - secrets.yaml
+
+helmCharts:
+  - name: keycloak
+    repo: oci://registry-1.docker.io/bitnamicharts/
+    releaseName: keycloak
+    version: 17.3.6
+    valuesInline:
+      auth:
+        adminUser: admin
+        existingSecret: keycloak
+        passwordSecretKey: password
+      postgresql:
+        auth:
+          database: keycloak
+          username: keycloak
+          existingSecret: keycloak
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hostname: keycloak.dev.eodhp.eco-ke-staging.com
+      # global.storageClass: file-storage
+
+patches:
+  - target:
+      kind: PersistentVolumeClaim
+    patch: |-
+      - op: replace
+        path: /spec/storageClassName
+        value: file-storage
