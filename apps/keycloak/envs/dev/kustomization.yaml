@@ -26,12 +26,4 @@ helmCharts:
         enabled: true
         ingressClassName: nginx
         hostname: keycloak.dev.eodhp.eco-ke-staging.com
-      # global.storageClass: file-storage
-
-patches:
-  - target:
-      kind: PersistentVolumeClaim
-    patch: |-
-      - op: replace
-        path: /spec/storageClassName
-        value: file-storage
+      global.storageClass: block-storage
