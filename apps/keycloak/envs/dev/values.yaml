@@ -1,0 +1,17 @@
+global.storageClass: block-storage
+auth:
+  adminUser: admin
+  existingSecret: keycloak
+  passwordSecretKey: password
+postgresql:
+  auth:
+    database: keycloak
+    username: keycloak
+    existingSecret: keycloak
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hostname: keycloak.dev.eodhp.eco-ke-staging.com
+tls:
+  enabled: true
+  existingSecret: keycloak

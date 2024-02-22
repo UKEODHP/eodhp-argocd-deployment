@@ -445,7 +445,7 @@ global:
     tls:
       - hosts:
           - vs.test.eodhp.eco-ke-staging.com
-        secretName: vs-secret
+        secretName: lets-encrypt
       # hosts and tls will be redefined always
     prefix:
       enabled: false

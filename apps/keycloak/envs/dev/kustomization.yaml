@@ -12,18 +12,12 @@ helmCharts:
     repo: oci://registry-1.docker.io/bitnamicharts/
     releaseName: keycloak
     version: 17.3.6
-    valuesInline:
-      auth:
-        adminUser: admin
-        existingSecret: keycloak
-        passwordSecretKey: password
-      postgresql:
-        auth:
-          database: keycloak
-          username: keycloak
-          existingSecret: keycloak
-      ingress:
-        enabled: true
-        ingressClassName: nginx
-        hostname: keycloak.dev.eodhp.eco-ke-staging.com
-      global.storageClass: block-storage
+    valuesFile: "values.yaml"
+
+patches:
+  - target:
+      kind: Ingress
+    patch: |-
+      - op: add
+        path: /metadata/annotations/cert-manager.io~1cluster-issuer
+        value: lets-encrypt
