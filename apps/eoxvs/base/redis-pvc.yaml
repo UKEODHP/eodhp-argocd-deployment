@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: data-access-redis
 spec:
-  storageClassName: block-storage
+  storageClassName: file-storage
   accessModes:
     - ReadWriteOnce
   resources:

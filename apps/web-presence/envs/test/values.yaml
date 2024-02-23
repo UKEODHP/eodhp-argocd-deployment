@@ -10,4 +10,4 @@ ingress:
 resource_catalogue:
   version: v1.2.3
 
-storage_class: block-storage
+storage_class: file-storage
