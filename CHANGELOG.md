@@ -3,6 +3,7 @@
 ## v0.4.0
 
 - Updated repo directory structure to support multi environment deployments
+- Swapped apps to use block-storage storage class
 
 ## v0.3.2
 
