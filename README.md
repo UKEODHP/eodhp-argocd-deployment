@@ -58,6 +58,7 @@ The EO DataHub Platform deployment expects the following resources to be availab
 
 ### Storage Classes
 
+- "block-storage" : for local pod persistent storage.
 - "file-storage" : for NFS like file system storage that can be shared between pods.
 
 ### Ingress Class
