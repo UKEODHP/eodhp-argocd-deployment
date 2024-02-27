@@ -5,6 +5,7 @@ namespace: ades
 
 resources:
   - namespace.yaml
+  - secrets.yaml
 
 helmCharts:
   - name: ades
