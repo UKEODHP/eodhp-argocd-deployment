@@ -11,6 +11,6 @@ eox_viewserver:
   url: https://vs.dev.eodhp.eco-ke-staging.com
 
 stac_browser:
-  url: https://resource-catalog-browser.s3.eu-west-2.amazonaws.com/v3.1.0
+  url: //resource-catalog-browser.s3.eu-west-2.amazonaws.com/v3.1.0
 
 storage_class: block-storage
