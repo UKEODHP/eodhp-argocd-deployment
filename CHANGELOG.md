@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.5.0
+
+- Added Keycloak app (not integrated with anything)
+
 ## v0.4.0
 
 - Updated repo directory structure to support multi environment deployments
