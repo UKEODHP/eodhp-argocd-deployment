@@ -17,13 +17,15 @@ Apps are managed as an ArgoCD ApplicationSet from the eodhp/ directory. The Argo
 ArgoCD must first be deployed to the cluster in such a way that it manages itself. To do so, apply the kustomization that contains the ArgoCD application that watches the `self` eodhp-argocd-deployment (this repository), which also contains ArgoCD install manifest (referenced in the apps/argocd/kustomization.yaml file).
 
 ```bash
-kubectl apply -k apps/argocd  # install argocd
-kubectl apply -k eodhp/       # install argocd applications
+kubectl apply -k apps/argocd        # install argocd
+kubectl apply -k eodhp/envs/<env>   # install argocd applications
 ```
+
+Ensure your kubectl context is set correctly before deploying the argocd applications.
 
 At this point ArgoCD will now be:
 
-- Deployed to the cluster.
+- Deployed to the target cluster.
 - Watching this repo for changes.
 - Managing all of the apps in _apps/_, including its own deployment.
 
@@ -32,7 +34,7 @@ At this point ArgoCD will now be:
 To remove EODHP from the cluster run:
 
 ```bash
-kubectl delete -k eodhp/
+kubectl delete -k eodhp/envs/<env>
 ```
 
 ### ArgoCD UI
@@ -49,3 +51,20 @@ You should now be able to access the UI on http://127.0.0.1:8080. The default us
 ### ArgoCD CRDs
 
 All ArgoCD Application CRD manifests should be deployed to the namespace ArgoCD, e.g. Any Application CRDs. Otherwise, they will not be picked up and implemented by ArgoCD.
+
+## Cluster Prerequisites
+
+The EO DataHub Platform deployment expects the following resources to be available on the cluster.
+
+### Storage Classes
+
+- "block-storage" : for local pod persistent storage.
+- "file-storage" : for NFS like file system storage that can be shared between pods.
+
+### Ingress Class
+
+- "nginx" : The ingress-nginx (https://kubernetes.github.io/ingress-nginx) ingress controller.
+
+### Secret Stores
+
+- "secret-store" : A ClusterSecretStore from external-secrets helm chart (https://charts.external-secrets.io).

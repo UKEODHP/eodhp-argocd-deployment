@@ -445,7 +445,7 @@ global:
     tls:
       - hosts:
           - vs.dev.eodhp.eco-ke-staging.com
-        secretName: vs-secret
+        secretName: vs.dev.eodhp.eco-ke-staging.com-tls
       # hosts and tls will be redefined always
     prefix:
       enabled: false
@@ -586,15 +586,15 @@ client:
         hidden: true
     downloadFormats:
       [
-        { "name": "TIFF", "mimeType": "image/tiff" },
-        { "name": "JPEG 2000", "mimeType": "image/jp2" },
-        { "name": "HDF", "mimeType": "application/x-hdf" },
+        {"name": "TIFF", "mimeType": "image/tiff"},
+        {"name": "JPEG 2000", "mimeType": "image/jp2"},
+        {"name": "HDF", "mimeType": "application/x-hdf"},
       ]
     multiDownloadFormats:
       [
-        { "name": "ZIP", "mimeType": "application/zip" },
-        { "name": "TAR", "mimeType": "application/tar" },
-        { "name": "GZIP", "mimeType": "application/gzip" },
+        {"name": "ZIP", "mimeType": "application/zip"},
+        {"name": "TAR", "mimeType": "application/tar"},
+        {"name": "GZIP", "mimeType": "application/gzip"},
       ]
     downloadProjections:
       [

@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/UKEODHP/eodhp-argocd-deployment.git
-    targetRevision: feature/EODHP-16-deploy-jupyter-notebook-to-cluster
+    targetRevision: HEAD
     path: apps/argocd
   syncPolicy:
     automated:

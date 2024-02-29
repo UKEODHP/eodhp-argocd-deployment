@@ -4,7 +4,8 @@ kind: Kustomization
 namespace: web
 
 resources:
-  - namespace.yaml
+  - ../../base
+  - secrets.yaml
 
 helmCharts:
   - name: eodhp-web-presence
@@ -23,7 +24,7 @@ patches:
         value: 
           - hosts: 
               - dev.eodhp.eco-ke-staging.com
-            secretName: lets-encrypt
+            secretName: dev.eodhp.eco-ke-staging.com-tls
       - op: add
         path: /metadata/annotations/cert-manager.io~1cluster-issuer
         value: lets-encrypt

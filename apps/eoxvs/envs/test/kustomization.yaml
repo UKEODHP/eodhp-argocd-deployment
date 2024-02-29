@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: eox
+
+resources:
+  - ../../base
+
+helmCharts:
+  - name: vs
+    repo: https://charts-public.hub.eox.at/
+    releaseName: eoxvs
+    version: 4.3.0
+    valuesFile: values.yaml
+
+patches:
+  - target:
+      kind: Ingress
+    patch: |-
+      # Update resource catalogue to use spec.ingressClassName instead of annotation
+      # "kubernetes.io/ingress.class"
+      - op: remove
+        path: /metadata/annotations/kubernetes.io~1ingress.class
+      - op: add
+        path: /spec/ingressClassName
+        value: nginx
+  - target:
+      kind: Ingress
+    patch: |-
+      - op: add
+        path: /metadata/annotations/cert-manager.io~1cluster-issuer
+        value: lets-encrypt
