@@ -5,10 +5,105 @@ namespace: app-hub
 
 resources:
   - namespace.yaml
+  - secret.yaml
 
-#helmCharts:
-#  - name: vs
-#    repo: https://charts-public.hub.eox.at/
-#    releaseName: eoxvs
-#    version: 4.3.0
-#    valuesFile: values.yaml
+helmCharts:
+  - name: application-hub
+    repo: https://eoepca.github.io/helm-charts 
+    releaseName: application-hub
+    namespace: app-hub
+    version: 2.0.55
+    # USER-SUPPLIED VALUES: helm -n proc get values application-hub
+    valuesInline:
+      ingress:
+        annotations: {}
+        clusterIssuer: notls
+        enabled: true
+        hosts:
+        - host: applicationhub.192-168-49-2.nip.io
+          paths:
+          - path: /
+            pathType: ImplementationSpecific
+        tls:
+        - hosts:
+          - applicationhub.192-168-49-2.nip.io
+          secretName: applicationhub-tls
+      jupyterhub:
+        fullnameOverride: application-hub
+        hub:
+          db:
+            pvc:
+              accessModes:
+              - ReadWriteOnce
+              annotations: {}
+              selector: {}
+              storage: 1Gi
+              storageClassName: standard
+              subPath: null
+            type: sqlite-pvc
+            upgrade: null
+          existingSecret: application-hub-secrets
+          extraEnv:
+            JUPYTERHUB_CRYPT_KEY:
+              valueFrom:
+                secretKeyRef:
+                  key: JUPYTERHUB_CRYPT_KEY
+                  name: application-hub-secrets
+            JUPYTERHUB_ENV: dev
+            JUPYTERHUB_SINGLE_USER_IMAGE: eoepca/pde-container:1.0.3
+            OAUTH_CALLBACK_URL: http://applicationhub.192-168-49-2.nip.io/hub/oauth_callback
+            OAUTH_CLIENT_ID:
+              valueFrom:
+                secretKeyRef:
+                  key: OAUTH_CLIENT_ID
+                  name: application-hub-secrets
+            OAUTH_CLIENT_SECRET:
+              valueFrom:
+                secretKeyRef:
+                  key: OAUTH_CLIENT_SECRET
+                  name: application-hub-secrets
+            OAUTH_LOGOUT_REDIRECT_URL: http://applicationhub.192-168-49-2.nip.io
+            OAUTH2_AUTHORIZE_URL: http://identity.keycloak.192-168-49-2.nip.io/realms/master/protocol/openid-connect/auth
+            OAUTH2_TOKEN_URL: http://identity.keycloak.192-168-49-2.nip.io/realms/master/protocol/openid-connect/token
+            OAUTH2_USERDATA_URL: http://identity.keycloak.192-168-49-2.nip.io/realms/master/protocol/openid-connect/userinfo
+            OAUTH2_USERNAME_KEY: preferred_username
+            RESOURCE_MANAGER_WORKSPACE_PREFIX: ws
+            STORAGE_CLASS: standard
+          image:
+            pullPolicy: Always
+            pullSecrets: []
+        singleuser:
+          image:
+            name: jupyter/minimal-notebook
+            tag: 2343e33dec46
+          profileList:
+          - default: "True"
+            description: 'To avoid too much bells and whistles: Python.'
+            display_name: Minimal environment
+          - description: Sample profile
+            display_name: EOEPCA profile
+            kubespawner_override:
+              cpu_limit": 4
+              mem_limit": 8G
+      nodeSelector:
+        key: minikube.k8s.io/primary
+        value: \"true\"
+
+patches:
+  - target:
+      kind: Ingress
+    patch: |-
+      # Update resource catalogue to use spec.ingressClassName instead of annotation
+      # "kubernetes.io/ingress.class"
+      - op: remove
+        path: /metadata/annotations/kubernetes.io~1ingress.class
+      - op: add
+        path: /spec/ingressClassName
+        value: nginx
+
+  - target:
+      kind: PodDisruptionBudget
+    patch: |-
+      - op: replace
+        path: /apiVersion
+        value: policy/v1
