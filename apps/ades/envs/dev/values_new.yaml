@@ -218,7 +218,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    cert-manager.io/cluster-issuer: notls
+    cert-manager.io/cluster-issuer: letsencrypt
   hosts:
     - host: ades.dev.eodhp.eco-ke-staging.com
       paths:
@@ -227,7 +227,7 @@ ingress:
   tls:
     - hosts:
         - ades.dev.eodhp.eco-ke-staging.com
-      secretName: ades-tls
+      secretName: ades-secret
 persistence:
   procServicesStorageClass: file-storage
   storageClass: block-storage
