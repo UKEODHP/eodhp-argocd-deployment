@@ -36,7 +36,7 @@ patches:
           name: STAGEOUT_AWS_SERVICEURL
           valueFrom:
             secretKeyRef:
-              name: ades
+              name: ades-ex-secret
               key: STAGEOUT_AWS_SERVICEURL
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -44,7 +44,7 @@ patches:
           name: STAGEOUT_AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: ades
+              name: ades-ex-secret
               key: STAGEOUT_AWS_SECRET_ACCESS_KEY
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -52,7 +52,7 @@ patches:
           name: STAGEOUT_AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: ades
+              name: ades-ex-secret
               key: STAGEOUT_AWS_ACCESS_KEY_ID
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -60,7 +60,7 @@ patches:
           name: STAGEOUT_AWS_REGION
           valueFrom:
             secretKeyRef:
-              name: ades
+              name: ades-ex-secret
               key: STAGEOUT_AWS_REGION
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -68,5 +68,5 @@ patches:
           name: STAGEOUT_OUTPUT
           valueFrom:
             secretKeyRef:
-              name: ades
+              name: ades-ex-secret
               key: STAGEOUT_OUTPUT
