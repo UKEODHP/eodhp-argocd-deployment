@@ -5,29 +5,68 @@ namespace: ades
 
 resources:
   - namespace.yaml
-  - secrets.yaml
+  - externalsecret.yaml
 
 helmCharts:
-  - name: ades
-    repo: https://eoepca.github.io/helm-charts
-    releaseName: ades
-    version: 2.0.24
-    valuesFile: values.yaml
-
+  - name: zoo-project-dru
+    repo: https://zoo-project.github.io/charts/
+    releaseName: zoo-project-dru
+    version: 0.2.6
+    valuesFile: values_new.yaml
+    namespace: ades
 patches:
   - target:
       kind: Ingress
     patch: |-
+      # Update resource catalogue to use spec.ingressClassName instead of annotation
+      # "kubernetes.io/ingress.class"
+      - op: remove
+        path: /metadata/annotations/kubernetes.io~1ingress.class
       - op: add
         path: /spec/ingressClassName
         value: nginx
   - target:
-      kind: Ingress
+      kind: Deployment
+      name: zoo-project-dru-zoofpm
     patch: |-
-      # Set TLS secret name
+      # Add STAGEOUT secrets as environment variables
       - op: add
-        path: /spec/tls/0/secretName
-        value: ades.dev.eodhp.eco-ke-staging.com-tls
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: STAGEOUT_AWS_SERVICEURL
+          valueFrom:
+            secretKeyRef:
+              name: ades-ex-secret
+              key: STAGEOUT_AWS_SERVICEURL
       - op: add
-        path: /metadata/annotations/cert-manager.io~1cluster-issuer
-        value: lets-encrypt
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: STAGEOUT_AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ades-ex-secret
+              key: STAGEOUT_AWS_SECRET_ACCESS_KEY
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: STAGEOUT_AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: ades-ex-secret
+              key: STAGEOUT_AWS_ACCESS_KEY_ID
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: STAGEOUT_AWS_REGION
+          valueFrom:
+            secretKeyRef:
+              name: ades-ex-secret
+              key: STAGEOUT_AWS_REGION
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: STAGEOUT_OUTPUT
+          valueFrom:
+            secretKeyRef:
+              name: ades-ex-secret
+              key: STAGEOUT_OUTPUT
