@@ -229,7 +229,7 @@ ingress:
         - ades.dev.eodhp.eco-ke-staging.com
       secretName: ades-tls
 persistence:
-  procServicesStorageClass: block-storage
+  procServicesStorageClass: file-storage
   storageClass: block-storage
   tmpStorageClass: file-storage
 postgresql:
