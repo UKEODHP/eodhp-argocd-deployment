@@ -201,7 +201,7 @@ files:
                 
                 print(f"s3://{bucket}/{subfolder}/catalog.json", file=sys.stdout)
 workflow:
-  defaultMaxRam: 8Gi
+  defaultMaxRam: 8
   defaultMaxCores: 4
   inputs:
     STAGEIN_AWS_SERVICEURL: http://data.cloudferro.com
