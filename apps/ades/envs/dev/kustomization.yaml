@@ -37,7 +37,7 @@ patches:
           valueFrom:
             secretKeyRef:
               name: ades-ex-secret
-              key: STAGEOUT_AWS_SERVICEURL
+              key: workflowExecutor.inputs.STAGEOUT_AWS_SERVICEURL
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
@@ -45,7 +45,7 @@ patches:
           valueFrom:
             secretKeyRef:
               name: ades-ex-secret
-              key: STAGEOUT_AWS_SECRET_ACCESS_KEY
+              key: workflowExecutor.inputs.STAGEOUT_AWS_SECRET_ACCESS_KEY
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
@@ -53,7 +53,7 @@ patches:
           valueFrom:
             secretKeyRef:
               name: ades-ex-secret
-              key: STAGEOUT_AWS_ACCESS_KEY_ID
+              key: workflowExecutor.inputs.STAGEOUT_AWS_ACCESS_KEY_ID
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
@@ -61,7 +61,7 @@ patches:
           valueFrom:
             secretKeyRef:
               name: ades-ex-secret
-              key: STAGEOUT_AWS_REGION
+              key: workflowExecutor.inputs.STAGEOUT_AWS_REGION
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
@@ -69,4 +69,4 @@ patches:
           valueFrom:
             secretKeyRef:
               name: ades-ex-secret
-              key: STAGEOUT_OUTPUT
+              key: workflowExecutor.inputs.STAGEOUT_OUTPUT
