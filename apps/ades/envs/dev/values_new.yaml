@@ -231,7 +231,7 @@ ingress:
 persistence:
   procServicesStorageClass: block-storage
   storageClass: block-storage
-  tmpStorageClass: block-storage
+  tmpStorageClass: file-storage
 postgresql:
   primary:
     persistence:
