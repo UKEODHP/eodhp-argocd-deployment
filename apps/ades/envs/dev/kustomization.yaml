@@ -5,15 +5,16 @@ namespace: ades
 
 resources:
   - ../../base
-  - externalsecret.yaml
+  - secrets.yaml
 
 helmCharts:
   - name: zoo-project-dru
     repo: https://zoo-project.github.io/charts/
     releaseName: zoo-project-dru
     version: 0.2.6
-    valuesFile: values_new.yaml
+    valuesFile: values.yaml
     namespace: ades
+
 patches:
   - target:
       kind: Ingress
@@ -36,7 +37,7 @@ patches:
           name: STAGEOUT_AWS_SERVICEURL
           valueFrom:
             secretKeyRef:
-              name: ades-ex-secret
+              name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_AWS_SERVICEURL
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -44,7 +45,7 @@ patches:
           name: STAGEOUT_AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: ades-ex-secret
+              name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_AWS_SECRET_ACCESS_KEY
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -52,7 +53,7 @@ patches:
           name: STAGEOUT_AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: ades-ex-secret
+              name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_AWS_ACCESS_KEY_ID
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -60,7 +61,7 @@ patches:
           name: STAGEOUT_AWS_REGION
           valueFrom:
             secretKeyRef:
-              name: ades-ex-secret
+              name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_AWS_REGION
       - op: add
         path: /spec/template/spec/containers/0/env/0
@@ -68,5 +69,5 @@ patches:
           name: STAGEOUT_OUTPUT
           valueFrom:
             secretKeyRef:
-              name: ades-ex-secret
+              name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_OUTPUT
