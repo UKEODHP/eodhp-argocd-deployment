@@ -218,7 +218,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    cert-manager.io/cluster-issuer: letsencrypt
+    cert-manager.io/cluster-issuer: lets-encrypt
   hosts:
     - host: ades.dev.eodhp.eco-ke-staging.com
       paths:
