@@ -210,7 +210,7 @@ workflow:
     STAGEIN_AWS_REGION: RegionOne
   nodeSelector:
     minikube.k8s.io/primary: "true"
-  storageClass: standard
+  storageClass: block-storage
 ingress:
   enabled: true
 
@@ -229,18 +229,18 @@ ingress:
         - ades.dev.eodhp.eco-ke-staging.com
       secretName: ades-tls
 persistence:
-  procServicesStorageClass: standard
-  storageClass: standard
-  tmpStorageClass: standard
+  procServicesStorageClass: block-storage
+  storageClass: block-storage
+  tmpStorageClass: block-storage
 postgresql:
   primary:
     persistence:
-      storageClass: standard
+      storageClass: block-storage
   readReplicas:
     persistence:
-      storageClass: standard
+      storageClass: block-storage
 rabbitmq:
   persistence:
-    storageClass: standard
+    storageClass: block-storage
 iam:
   enabled: false
