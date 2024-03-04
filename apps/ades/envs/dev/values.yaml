@@ -210,7 +210,7 @@ workflow:
     STAGEIN_AWS_REGION: RegionOne
   nodeSelector:
     minikube.k8s.io/primary: "true"
-  storageClass: block-storage
+  storageClass: file-storage
 ingress:
   enabled: true
 
@@ -230,17 +230,17 @@ ingress:
       secretName: ades-secret
 persistence:
   procServicesStorageClass: file-storage
-  storageClass: block-storage
+  storageClass: file-storage
   tmpStorageClass: file-storage
 postgresql:
   primary:
     persistence:
-      storageClass: block-storage
+      storageClass: file-storage
   readReplicas:
     persistence:
-      storageClass: block-storage
+      storageClass: file-storage
 rabbitmq:
   persistence:
-    storageClass: block-storage
+    storageClass: file-storage
 iam:
   enabled: false
