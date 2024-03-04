@@ -235,12 +235,12 @@ persistence:
 postgresql:
   primary:
     persistence:
-      storageClass: file-storage
+      storageClass: block-storage
   readReplicas:
     persistence:
-      storageClass: file-storage
+      storageClass: block-storage
 rabbitmq:
   persistence:
-    storageClass: file-storage
+    storageClass: block-storage
 iam:
   enabled: false
