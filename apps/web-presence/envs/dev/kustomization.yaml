@@ -23,8 +23,8 @@ patches:
         path: /spec/tls
         value: 
           - hosts: 
-              - dev.eodhp.eco-ke-staging.com
-            secretName: dev.eodhp.eco-ke-staging.com-tls
+              - steg.eodhp.eco-ke-staging.com
+            secretName: steg.eodhp.eco-ke-staging.com-tls
       - op: add
         path: /metadata/annotations/cert-manager.io~1cluster-issuer
         value: lets-encrypt
