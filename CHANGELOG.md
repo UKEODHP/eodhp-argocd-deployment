@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.6.0
+
+- Added STAC browser link from web presence
+
 ## v0.5.0
 
 - Added Keycloak app (not integrated with anything)
