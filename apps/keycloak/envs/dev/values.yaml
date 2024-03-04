@@ -11,7 +11,7 @@ postgresql:
 ingress:
   enabled: true
   ingressClassName: nginx
-  hostname: keycloak.steg.eodhp.eco-ke-staging.com
+  hostname: keycloak.dev.eodhp.eco-ke-staging.com
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
   tls: true
