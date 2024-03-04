@@ -11,6 +11,6 @@ eox_viewserver:
   url: http://vs.dev.eodhp.eco-ke-staging.com/
 
 stac_browser:
-  url: http://stac.dev.eodhp.eco-ke-staging.com/
+  url: http://stac.dev.eodhp.eco-ke-staging.com/v3.1.1
 
 storage_class: block-storage
