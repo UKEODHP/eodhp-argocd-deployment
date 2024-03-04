@@ -1,11 +1,11 @@
-app_url: steg.eodhp.eco-ke-staging.com
+app_url: dev.eodhp.eco-ke-staging.com
 
 database:
   sql_user: "admin"
   sql_password: "password"
 
 ingress:
-  host: steg.eodhp.eco-ke-staging.com
+  host: dev.eodhp.eco-ke-staging.com
 
 eox_viewserver:
   url: https://vs.dev.eodhp.eco-ke-staging.com/
