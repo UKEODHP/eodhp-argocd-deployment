@@ -16,3 +16,43 @@ ingress:
     cert-manager.io/cluster-issuer: lets-encrypt
   tls: true
 proxy: edge
+keycloakConfigCli:
+  enabled: true
+  configuration:
+    eodhp: |
+      {
+        "realm": "eodhp",
+        "displayName": "UK EO DataHub Platform",
+        "enabled": true,
+        "registrationAllowed": false,
+        "registrationEmailAsUsername": false,
+        "rememberMe": false,
+        "verifyEmail": false,
+        "loginWithEmailAllowed": true,
+        "duplicateEmailsAllowed": false,
+        "resetPasswordAllowed": false,
+        "editUsernameAllowed": false,
+        "permanentLockout": false,
+        "requiredCredentials": [
+          "password"
+        ],
+        "clients": [
+          {
+            "clientId": "application-hub",
+            "name": "Application Hub",
+            "enabled": true,
+            "alwaysDisplayInConsole": true,
+            "clientAuthenticatorType": "client-secret",
+            "redirectUris": [
+              "https://apphub.dev.eodhp.eco-ke-staging.com/*"
+            ],
+            "webOrigins": [
+              "https://apphub.dev.eodhp.eco-ke-staging.com"
+            ],
+            "standardFlowEnabled": true,
+            "implicitFlowEnabled": false,
+            "publicClient": true,
+            "protocol": "openid-connect",
+          }
+        ]
+      }
