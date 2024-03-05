@@ -6,7 +6,6 @@ namespace: ades
 resources:
   - ../../base
   - secrets.yaml
-  - ingress-secret.yaml
 
 helmCharts:
   - name: zoo-project-dru
