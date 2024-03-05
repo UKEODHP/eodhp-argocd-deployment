@@ -5,6 +5,7 @@ namespace: app-hub
 
 resources:
   - ../../base
+  - secrets.yaml
 
 helmCharts:
   - name: application-hub
