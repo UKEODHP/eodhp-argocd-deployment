@@ -45,11 +45,11 @@ kustomize build --enable-helm base | kubectl -n proc apply -f -
   --description="Client to be used by Application Hub for OIDC integration"
 
 # Minio
-kustomize build --enable-helm minio | kubectl -n rm apply -f -
+#kustomize build --enable-helm minio | kubectl -n rm apply -f -
 
 # ADES (zoo-dru)
 # No workspace integration, so ADES will stage-out to minio (eoepca bucket)
-kustomize build --enable-helm zoo-dru | kubectl -n zoo apply -f -
+#kustomize build --enable-helm zoo-dru | kubectl -n zoo apply -f -
 
 # zoo-dru is protected by a gatekeeper instance that relies upon
 # a Keycloak client that must be created
