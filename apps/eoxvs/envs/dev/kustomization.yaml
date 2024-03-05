@@ -12,6 +12,7 @@ helmCharts:
     releaseName: eoxvs
     version: 4.3.0
     valuesFile: values.yaml
+    namespace: eox
 
 patches:
   - target:

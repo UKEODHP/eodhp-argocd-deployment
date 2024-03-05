@@ -13,7 +13,8 @@ helmCharts:
     releaseName: web-presence
     version: 0.1.1
     valuesFile: values.yaml
-
+    namespace: web
+    
 patches:
   - target:
       kind: Ingress
