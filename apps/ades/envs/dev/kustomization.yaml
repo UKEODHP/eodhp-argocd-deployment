@@ -71,3 +71,4 @@ patches:
             secretKeyRef:
               name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_OUTPUT
+  - path: delete-pvs-patch.yaml
