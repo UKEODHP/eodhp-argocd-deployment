@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: config-scanning
+spec:
+  template:
+    spec:
+      serviceAccountName: s3-access
+      volumes:
+        - name: secret-volume
+          secret:
+            secretName: dotfile-secret
+      containers:
+        - name: harvest-root
+          volumeMounts:
+            - name: secret-volume
+              readOnly: true
+              mountPath: "/etc/secret-volume"
+          env:
+            - name: app-id-file
+              value: "app-id"
+            - name: app-private-key-file
+              value: "app-private-key"
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.0.4
+          command: ["python3", "-m", "configscanning.repoupdater", "https://github.com/UKEODHP/catalogue-data/", "/tmp", "--app-id-from", "app-id", "--app-private-key-from", "app-private-key", "--pull"]
+        - name: ingest-root
+#          env:
+#            - name: AWS_ACCESS_KEY
+#              value:
+#            - name: AWS_SECRET_ACCESS_KEY
+#              value:
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.0.4
+          command: ["python3", "-m", "configscanning.comparefiles", "/tmp/catalogue-data/", "catalogue-data", "", ""]
+      restartPolicy: Never
+  backoffLimit: 4
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dotfile-secret
+data:
+  app-id: ODQyOTIxCg==
+  app-private-key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBMmFYWHV0Mlpkc0FETFRmamJWdjhPai9SaFhJQnFyeFVoSi93QVlqVHk3b2NVQUMzCitxVU9CUlJDb2hWdFppeWxWK0t6emZvQURNckNQUUdoUElQbVRiYkhYWGkwNlU3b1pHZ0xrcGhIM3FNNGFlVUcKa1RTS2pUM0YyRmMzOFp3Nm5iaW5YZDdFcXdqM2ZQZUpMbzdRS2ROSnpvaW1oYVZDcFNBWCtLYUlPRURjR3h3eApsUkhTbS9VV3dEcXczRXdKck5UdGZxUko5RTJVTk9acFlvL0Jhb2RzQ0VNeXRnaTJEemM4K3hoalVnVVUrSytwCklwVWhsb1JkdVdUWE9OVW5GR3g4SzA4T1FWK3JDSXV2Mm9UNGs5UStScTJrdm8zSXQ4WkJNaGlQT095bmJTbWgKa3pNSERCZjJDUVkraUFrTTJzTzJmYTE4d1F5YlpzWW5hSTlZSVFJREFRQUJBb0lCQVFDdWJOU0pNNU1Mc2pKWgppTkxCRDlrQ0xhY1NsUjEwNFYyeXRDSzZlQmVVeStCbzFVcWNtcTZ6cjFyL1hzREFBOE8ydlQ1d01vemJzNXNiCkhUVkV0RWhidThIbXpSZmZhcGVmOENwbUg1aHBldEY1UEV5WkRreURpU0FIazA2SVdUWTR0SVdkR3l6dURVK2EKWFI4WnF1WjB2cG9GNVVuZkRXUnR4Vnl3cjNXMzdmZkhMWXRXL1lDbDRWS21OcW8yOGtOb29ock1scG5HRVV3egpzNjdGdE5WS25JdXdjQVhja2ZuVFpMU0NqOFFvZ2J2M2krYmVFQTR2OG1JMTcxWUFOQTBKQllEcEJseFlFVkNLCmRhTW8xUm5HWXIxN051cmx6b1UxSjQxQ1FvWEFiWnozZXZad0d5OXQ2VmRxMjBzZTVWVkRScW9SNGJ6UlAzdXoKdHZURVM3eEpBb0dCQVB4YkE4T212UEhBTmRFWVBCVmdFM1Ewenp5NUt6dFF2R3dITDdRSHpHVVEwekZ6ODMveQpRS1V3aS9kUmtpclNWWjk5bm1Rd0wzL0pJc2FvU216dm5ucUYyVFluOEJZaWRzZmtkYlFkV1lDWVZnMzlQYTNlCkVlVStzRE1hdHBEb1d3bGJpYW9DZXpBQkJxVXphcFlsaHZlalFlZUxSYUp4S3Jlb3lOaFVxMWM3QW9HQkFOeksKZ29sL0htK1dFUVRMRjM0Z0VXeFluWmRhckdqUk1ZM1pNbENDNnhTSEZVZ0pkVDlObFk3Y0gwUisrTDE3MDFtTwpMTHp0MXcxZjdMQVIwNmNSb09lcVZmZC9jT3M5dkVrdGJ3R3ozbUJPYU0rdWRQNXlvaHRRRk1RcFF5RlljRlI1ClArWGk3V1pBQnNCN0RYcWRtWi9PTFZVMUg3dENTRFArZUtSWmhUQlRBb0dBSk1UcUpuN0w5dm1IbmVESEdHSTQKVTIxQ2FObWVGL1ZxanQ3NUwyVVhmZjVXbDFVS3ZMRENoSTh2UmFqb0FEOUhaSWE4Sm1MeStNNkl0Nk5idk1XcApOTGI5OENzZmkwb1lQb1htTklrMk9rdDM5bS9ZcGRXK2k4VjNqT3F1Z1N5cDN4SXNXODRpdnRyWGFnaTAxZzIvCnZhTlcvZkxJQWFRMWtpOFFuSnl4bm5NQ2dZQm4za0VnekJPV2JTT2VmS2lWcGlKc05SZ1dMd3J5Mkk4V2F6cFgKVSsraG5aYnVaN3lueGlqNHB5ZHlnc1VqNXcvYmpwNFBWMWlYS3l4ZS9GUDB3YjlQblB1S1RvTGh1QTVPNHJmWgpOalFFWEg3RVRROHU4T0RBTnFFK1V5Y0lsZUZxYkF3YWF2SkI2eGNDRUNHY01HNG9Gc2VPMFVvWFB5eFdnWDFoCjI5ZGpqd0tCZ0hCbnpDZGh4WjYrdDZqSG9KVmpBV3RGZXhvR29DUzUzNWR4SlVma1hsUUVmc01IbkFKdzArNlkKa2xPMDFvaVNqeWkzcGVrWEdoWXRsYk1QSldGOE1BSEkxcFhaM004cUdsdEJRb1hkSi95UlhYaG43bFhBcVA1RAp4SGRTajJ3b2plVU10Ukc3UWpKNGdmeVNJR0MyVVhoek1ncDM4cW9UcmNIQ1cyaTRPdGk3Ci0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCgo=
