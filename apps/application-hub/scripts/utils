@@ -1,0 +1,87 @@
+ingress_admission_ready_check() {
+  echo "[INFO]  Wait for ingress-nginx admission ready..."
+  interval=$(( 1 ))
+  msgInterval=$(( 5 ))
+  step=$(( msgInterval / interval ))
+  count=$(( 0 ))
+  status=$(( 1 ))
+  while [ $status -ne 0 ]
+  do
+    kubectl apply -f - <<EOF 2>/dev/null
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: readycheck
+spec:
+  rules:
+  - host: readycheck.192-168-49-2.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: readycheck
+            port:
+              number: 80
+EOF
+    status=$(( $? ))
+    if [ $status -eq 0 ]; then break; fi
+    test $(( count % step )) -eq 0 && echo "[INFO]  Waiting for service/ingress-nginx-controller-admission"
+    sleep $interval
+    count=$(( count + interval ))
+  done
+  kubectl delete ingress/readycheck
+  echo "[INFO]  ...ingress-nginx admission READY."
+}
+
+createIdentityApiClient() {
+  # Wait for services to be ready..
+  echo "Waiting for Identity Postgres service to be ready..."
+  kubectl -n um rollout status deploy/identity-postgres --watch
+  echo "Waiting for Identity Keycloak service to be ready..."
+  kubectl -n um rollout status deploy/identity-keycloak --watch
+  echo "Waiting for Identity API service to be ready..."
+  kubectl -n um rollout status deploy/identity-api --watch
+
+  # Use port-forwarding to go directly to the identity-api service
+  echo "Establish port-forwarding to Identity API service on port 9876..."
+  kubectl -n um port-forward svc/identity-api 9876:http >/dev/null &
+  portForwardPid=$!
+  sleep 1
+
+  # Create the client
+  ./scripts/create-client \
+    -a http://keycloak.192-168-49-2.nip.io \
+    -i http://localhost:9876 \
+    -r master \
+    -u admin \
+    -p changeme \
+    -c admin-cli \
+    --id=identity-api \
+    --name="Identity API Gatekeeper" \
+    --secret=changeme \
+    --description="Client to be used by Identity API Gatekeeper" \
+    --resource="admin" --uris='/*' --scopes=view --users=admin
+
+  # Stop the port-forwarding
+  echo "Stop port-forwarding to Identity API service on port 9876..."
+  kill -TERM $portForwardPid
+
+  # Wait for services to be ready..
+  echo "Waiting for Identity API Protection service to be ready..."
+  kubectl -n um rollout status deploy/identity-api-protection --watch
+}
+
+createUser() {
+  user="$1"
+  password=changeme
+  ./scripts/create-user \
+    -a http://keycloak.192-168-49-2.nip.io \
+    -r master \
+    -u admin \
+    -p changeme \
+    -c admin-cli \
+    -U "${user}" \
+    -P "${password}"
+}

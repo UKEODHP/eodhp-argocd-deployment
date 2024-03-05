@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# source ./scripts/functions
+source ./scripts/utils
+
+# ingress-nginx
+# specify version <4.5.0 for consistency with k8s version v1.22.5
+kustomize build --enable-helm ingress-nginx | kubectl -n ingress-nginx apply -f -
+# wait for the ingress admission to be ready before proceeding,
+# otherwise deployment of other BBs will fail
+ingress_admission_ready_check
+
+# identity-service (Keycloak)
+kustomize build --enable-helm identity-service | kubectl -n um apply -f -
+
+# the identity-api is protected by a gatekeeper instance that relies upon
+# a Keycloak client that must be created
+createIdentityApiClient
+
+# create test users - e.g. those assumed by the Application Hub
+users=("eric" "bob" "alice")
+for user in "${users[@]}"; do
+  createUser "${user}"
+done
+
+# application-hub
+# using the 'proc' namespace - since it seems that the helm chart is effectively
+# hard-coded for this - ref...
+# - https://github.com/EOEPCA/helm-charts/blob/main/charts/application-hub/files/hub/jupyter_config.py#L171
+# - https://github.com/EOEPCA/helm-charts/blob/main/charts/application-hub/files/hub/jupyter_config.py#L238
+kustomize build --enable-helm base | kubectl -n proc apply -f -
+
+# the application-hub integrates with Keycloak via OIDC for user authentication
+# this relies upon a Keycloak client that must be created
+./scripts/create-client \
+  -a http://keycloak.192-168-49-2.nip.io \
+  -i http://identity-api.192-168-49-2.nip.io \
+  -r master \
+  -u admin \
+  -p changeme \
+  -c admin-cli \
+  --id=application-hub \
+  --name="Application Hub OIDC Client" \
+  --secret=changeme \
+  --description="Client to be used by Application Hub for OIDC integration"
+
+# Minio
+kustomize build --enable-helm minio | kubectl -n rm apply -f -
+
+# ADES (zoo-dru)
+# No workspace integration, so ADES will stage-out to minio (eoepca bucket)
+kustomize build --enable-helm zoo-dru | kubectl -n zoo apply -f -
+
+# zoo-dru is protected by a gatekeeper instance that relies upon
+# a Keycloak client that must be created
+./scripts/create-client \
+  -a http://keycloak.192-168-49-2.nip.io \
+  -i http://identity-api.192-168-49-2.nip.io \
+  -r master \
+  -u admin \
+  -p changeme \
+  -c admin-cli \
+  --id=ades \
+  --name="ADES Gatekeeper" \
+  --secret=changeme \
+  --description="Client to be used by ADES Gatekeeper" \
+  --resource="eric" --uris='/eric/*' --scopes=view --users="eric" \
+  --resource="bob" --uris='/bob/*' --scopes=view --users="bob" \
+  --resource="alice" --uris='/alice/*' --scopes=view --users="alice"

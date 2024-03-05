@@ -1,0 +1,66 @@
+resources:
+  - namespace.yaml
+  - persistence.yaml
+
+helmCharts:
+  - name: identity-service
+    repo: https://eoepca.github.io/helm-charts
+    version: 1.0.97
+    releaseName: identity-service
+    namespace: um
+    skipTests: true
+    valuesInline:
+      identity-keycloak:
+        secrets:
+          kcDbPassword: changeme
+          keycloakAdminPassword: changeme
+        ingress:
+          enabled: true
+          className: nginx
+          annotations:
+            ingress.kubernetes.io/ssl-redirect: "false"
+            nginx.ingress.kubernetes.io/ssl-redirect: "false"
+            cert-manager.io/cluster-issuer: notls
+          hosts:
+            - host: keycloak.192-168-49-2.nip.io
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - secretName: identity-keycloak-tls
+              hosts:
+                - keycloak.192-168-49-2.nip.io
+      identity-postgres:
+        secrets:
+          postgresPassword: changeme
+          pgPassword: changeme
+        volumeClaim:
+          name: identity-postgres
+      identity-api:
+        secrets:
+          adminPassword: changeme
+        deployment:
+          extraEnv:
+            - name: AUTH_SERVER_URL
+              value: http://keycloak.192-168-49-2.nip.io
+            - name: ADMIN_USERNAME
+              value: admin
+            - name: REALM
+              value: master
+            - name: LOG_LEVEL
+              value: DEBUG
+      identity-api-gatekeeper:
+        config:
+          client-id: identity-api
+          discovery-url: http://keycloak.192-168-49-2.nip.io/realms/master
+          cookie-domain: 192-168-49-2.nip.io
+        targetService:
+          host: identity-api.192-168-49-2.nip.io
+        secrets:
+          clientSecret: changeme
+          encryptionKey: changemechangeme
+        ingress:
+          annotations:
+            ingress.kubernetes.io/ssl-redirect: "false"
+            nginx.ingress.kubernetes.io/ssl-redirect: "false"
+            cert-manager.io/cluster-issuer: notls

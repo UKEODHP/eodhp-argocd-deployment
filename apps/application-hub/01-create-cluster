@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+clusterName="${1:-eoepca}"
+
+# create cluster
+# specify kubernetes version v1.22.5 that eoepca has been tested with
+# expose the ingress-nginx controller service ports to the host
+minikube -p "${clusterName}" start --kubernetes-version=v1.22.5 --ports=80:80,443:433
+minikube profile "${clusterName}"
