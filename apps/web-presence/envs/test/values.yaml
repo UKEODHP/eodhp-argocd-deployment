@@ -7,7 +7,10 @@ database:
 ingress:
   host: test.eodhp.eco-ke-staging.com
 
-resource_catalogue:
-  version: v1.2.3
+eox_viewserver:
+  url: https://vs.test.eodhp.eco-ke-staging.com/
+
+stac_browser:
+  url: https://stac.test.eodhp.eco-ke-staging.com/v3.1.1
 
 storage_class: block-storage
