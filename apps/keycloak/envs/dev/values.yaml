@@ -51,7 +51,7 @@ keycloakConfigCli:
             ],
             "standardFlowEnabled": true,
             "implicitFlowEnabled": false,
-            "publicClient": true,
+            "publicClient": false,
             "protocol": "openid-connect",
           }
         ]
