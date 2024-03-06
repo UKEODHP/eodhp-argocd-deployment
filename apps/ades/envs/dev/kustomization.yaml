@@ -15,6 +15,13 @@ helmCharts:
     valuesFile: values.yaml
     namespace: ades
 
+configMapGenerator:
+  - name: zoo-project-dru-zoofpm-config
+    literals:
+      - STAGEOUT_AWS_SERVICEURL=https://s3.eu-west-2.amazonaws.com
+      - STAGEOUT_AWS_REGION=eu-west-2
+      - STAGEOUT_OUTPUT=eodhp-ades
+
 patches:
   - target:
       kind: Ingress
@@ -32,15 +39,15 @@ patches:
     patch: |-
       # Add STAGEOUT secrets as environment variables
       - op: add
-        path: /spec/template/spec/containers/0/env/0
+        path: /spec/template/spec/containers/0/env/-
         value:
           name: STAGEOUT_AWS_SERVICEURL
           valueFrom:
-            secretKeyRef:
-              name: ades-secret
-              key: workflowExecutor.inputs.STAGEOUT_AWS_SERVICEURL
+            configMapKeyRef:
+              name: zoo-project-dru-zoofpm-config
+              key: STAGEOUT_AWS_SERVICEURL
       - op: add
-        path: /spec/template/spec/containers/0/env/0
+        path: /spec/template/spec/containers/0/env/-
         value:
           name: STAGEOUT_AWS_SECRET_ACCESS_KEY
           valueFrom:
@@ -48,7 +55,7 @@ patches:
               name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_AWS_SECRET_ACCESS_KEY
       - op: add
-        path: /spec/template/spec/containers/0/env/0
+        path: /spec/template/spec/containers/0/env/-
         value:
           name: STAGEOUT_AWS_ACCESS_KEY_ID
           valueFrom:
@@ -56,19 +63,19 @@ patches:
               name: ades-secret
               key: workflowExecutor.inputs.STAGEOUT_AWS_ACCESS_KEY_ID
       - op: add
-        path: /spec/template/spec/containers/0/env/0
+        path: /spec/template/spec/containers/0/env/-
         value:
           name: STAGEOUT_AWS_REGION
           valueFrom:
-            secretKeyRef:
-              name: ades-secret
-              key: workflowExecutor.inputs.STAGEOUT_AWS_REGION
+            configMapKeyRef:
+              name: zoo-project-dru-zoofpm-config
+              key: STAGEOUT_AWS_REGION
       - op: add
-        path: /spec/template/spec/containers/0/env/0
+        path: /spec/template/spec/containers/0/env/-
         value:
           name: STAGEOUT_OUTPUT
           valueFrom:
-            secretKeyRef:
-              name: ades-secret
-              key: workflowExecutor.inputs.STAGEOUT_OUTPUT
+            configMapKeyRef:
+              name: zoo-project-dru-zoofpm-config
+              key: STAGEOUT_OUTPUT
   - path: delete-pvc-patch.yaml
