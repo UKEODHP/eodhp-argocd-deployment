@@ -1,0 +1,6 @@
+$patch: delete
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zoo-project-dru-documentation-services
+  namespace: ades
