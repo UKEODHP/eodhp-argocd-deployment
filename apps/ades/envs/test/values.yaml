@@ -230,7 +230,7 @@ ingress:
   tls:
     - hosts:
         - ades.test.eodhp.eco-ke-staging.com
-      secretName: ades-secret
+      secretName: ades.test.eodhp.eco-ke-staging.com-tls
 persistence:
   procServicesStorageClass: file-storage
   storageClass: file-storage
