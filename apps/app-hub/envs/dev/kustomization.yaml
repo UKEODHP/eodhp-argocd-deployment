@@ -26,6 +26,9 @@ patches:
       - op: add
         path: /spec/ingressClassName
         value: nginx
+      - op: add
+        path: /metadata/annotations/external-dns.alpha.kubernetes.io~1hostname
+        value: "*.apphub.test.eodhp.eco-ke-staging.com"
   - target:
       kind: PodDisruptionBudget
     patch: |-
