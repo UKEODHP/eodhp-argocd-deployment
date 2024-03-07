@@ -15,7 +15,8 @@ helmCharts:
     # repo: https://github.com/kubeshop/helm-charts/tree/main/charts/global
     releaseName: testkube
     # version: 1.11.220
-    version: 1.12.2
+    version: 1.16.49
+    # version: 3.0.0
     # version: 0.1.1 
     # valuesFile: values.yaml
 
