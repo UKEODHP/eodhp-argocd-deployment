@@ -1,11 +1,11 @@
-app_url: dev.eodhp.eco-ke-staging.com
+app_url: dev.eodatahub.org.uk
 
 database:
   sql_user: "admin"
   sql_password: "password"
 
 ingress:
-  host: dev.eodhp.eco-ke-staging.com
+  host: dev.eodatahub.org.uk
 
 resource_catalogue:
   version: v1.2.3

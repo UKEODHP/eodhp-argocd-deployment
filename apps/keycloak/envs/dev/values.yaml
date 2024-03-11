@@ -11,7 +11,7 @@ postgresql:
 ingress:
   enabled: true
   ingressClassName: nginx
-  hostname: keycloak.dev.eodhp.eco-ke-staging.com
+  hostname: keycloak.dev.eodatahub.org.uk
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
   tls: true
@@ -44,10 +44,10 @@ keycloakConfigCli:
             "alwaysDisplayInConsole": true,
             "clientAuthenticatorType": "client-secret",
             "redirectUris": [
-              "https://apphub.dev.eodhp.eco-ke-staging.com/*"
+              "https://apphub.dev.eodatahub.org.uk/*"
             ],
             "webOrigins": [
-              "https://apphub.dev.eodhp.eco-ke-staging.com"
+              "https://apphub.dev.eodatahub.org.uk"
             ],
             "standardFlowEnabled": true,
             "implicitFlowEnabled": false,

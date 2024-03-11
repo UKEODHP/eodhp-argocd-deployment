@@ -3,14 +3,14 @@ ingress:
   enabled: true
   annotations: {}
   hosts:
-    - host: apphub.dev.eodhp.eco-ke-staging.com
+    - host: apphub.dev.eodatahub.org.uk
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    - secretName: apphub.dev.eodhp.eco-ke-staging.com-tls
+    - secretName: apphub.dev.eodatahub.org.uk-tls
       hosts:
-        - apphub.dev.eodhp.eco-ke-staging.com
+        - apphub.dev.eodatahub.org.uk
   clusterIssuer: lets-encrypt
 
 jupyterhub:
@@ -20,11 +20,11 @@ jupyterhub:
     extraEnv:
       JUPYTERHUB_ENV: "dev"
       JUPYTERHUB_SINGLE_USER_IMAGE: "eoepca/pde-container:1.0.3"
-      OAUTH_CALLBACK_URL: https://apphub.dev.eodhp.eco-ke-staging.com/hub/oauth_callback
-      OAUTH2_USERDATA_URL: https://keycloak.dev.eodhp.eco-ke-staging.com/realms/eodhp/protocol/openid-connect/userinfo
-      OAUTH2_TOKEN_URL: https://keycloak.dev.eodhp.eco-ke-staging.com/realms/eodhp/protocol/openid-connect/token
-      OAUTH2_AUTHORIZE_URL: https://keycloak.dev.eodhp.eco-ke-staging.com/realms/eodhp/protocol/openid-connect/auth
-      OAUTH_LOGOUT_REDIRECT_URL: "https://apphub.dev.eodhp.eco-ke-staging.com"
+      OAUTH_CALLBACK_URL: https://apphub.dev.eodatahub.org.uk/hub/oauth_callback
+      OAUTH2_USERDATA_URL: https://keycloak.dev.eodatahub.org.uk/realms/eodhp/protocol/openid-connect/userinfo
+      OAUTH2_TOKEN_URL: https://keycloak.dev.eodatahub.org.uk/realms/eodhp/protocol/openid-connect/token
+      OAUTH2_AUTHORIZE_URL: https://keycloak.dev.eodatahub.org.uk/realms/eodhp/protocol/openid-connect/auth
+      OAUTH_LOGOUT_REDIRECT_URL: "https://apphub.dev.eodatahub.org.uk"
       OAUTH2_USERNAME_KEY: "preferred_username"
       STORAGE_CLASS: block-storage
       RESOURCE_MANAGER_WORKSPACE_PREFIX: "ws"

@@ -14,7 +14,7 @@ helmCharts:
     version: 0.1.1
     valuesFile: values.yaml
     namespace: web
-    
+
 patches:
   - target:
       kind: Ingress
@@ -24,8 +24,8 @@ patches:
         path: /spec/tls
         value: 
           - hosts: 
-              - dev.eodhp.eco-ke-staging.com
-            secretName: dev.eodhp.eco-ke-staging.com-tls
+              - dev.eodatahub.org.uk
+            secretName: dev.eodatahub.org.uk-tls
       - op: add
         path: /metadata/annotations/cert-manager.io~1cluster-issuer
         value: lets-encrypt
