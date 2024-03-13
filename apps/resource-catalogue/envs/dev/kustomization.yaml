@@ -8,3 +8,4 @@ resources:
   - ingest-catalogue-data.yaml
   - ingest-catalogue-supported-data.yaml
   - secrets.yaml
+  - service-account.yaml

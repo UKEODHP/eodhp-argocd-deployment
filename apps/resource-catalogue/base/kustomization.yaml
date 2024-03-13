@@ -5,4 +5,3 @@ namespace: rc
 
 resources:
   - namespace.yaml
-  - service-account.yaml
