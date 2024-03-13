@@ -62,20 +62,20 @@ patches:
             configMapKeyRef:
               name: zoo-project-dru-zoofpm-config
               key: STAGEOUT_OUTPUT
-      - op: add
-        path: /spec/template/spec/containers/0/env/-
-        value:
-          name: STAGEOUT_AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: ades-secret
-              key: workflowExecutor.inputs.STAGEOUT_AWS_ACCESS_KEY_ID
-      - op: add
-        path: /spec/template/spec/containers/0/env/-
-        value:
-          name: STAGEOUT_AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: ades-secret
-              key: workflowExecutor.inputs.STAGEOUT_AWS_SECRET_ACCESS_KEY
+      # - op: add
+      #   path: /spec/template/spec/containers/0/env/-
+      #   value:
+      #     name: STAGEOUT_AWS_ACCESS_KEY_ID
+      #     valueFrom:
+      #       secretKeyRef:
+      #         name: ades-secret
+      #         key: workflowExecutor.inputs.STAGEOUT_AWS_ACCESS_KEY_ID
+      # - op: add
+      #   path: /spec/template/spec/containers/0/env/-
+      #   value:
+      #     name: STAGEOUT_AWS_SECRET_ACCESS_KEY
+      #     valueFrom:
+      #       secretKeyRef:
+      #         name: ades-secret
+      #         key: workflowExecutor.inputs.STAGEOUT_AWS_SECRET_ACCESS_KEY
   - path: delete-pvc-patch.yaml

@@ -17,10 +17,10 @@ serviceAccount:
   create: true
   # Annotations to add to the service account
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::312280911266:role/ades"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::312280911266:role/ADES-eodhp-dev-9ylvhv4X"
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  # name: "ades"
+  # name: ""
 
 files:
   # Directory 'files/cwlwrapper-assets' - assets for ConfigMap 'XXX-cwlwrapper-config'
