@@ -95,12 +95,14 @@ files:
                 print(f"subfolder: {subfolder}", file=sys.stderr)
                 print(f"collection_id: {collection_id}", file=sys.stderr)
                 
-                aws_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
-                aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
+                #aws_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
+                #aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
+                role_name = os.environ["AWS_ROLE_NAME"]
+                print(f"role_name: {role_name}", file=sys.stderr)
                 region_name = os.environ["AWS_REGION"]
                 endpoint_url = os.environ["AWS_S3_ENDPOINT"]
-                print(f"aws_access_key_id: {aws_access_key_id}", file=sys.stderr)
-                print(f"aws_secret_access_key: {aws_secret_access_key}", file=sys.stderr)
+                #print(f"aws_access_key_id: {aws_access_key_id}", file=sys.stderr)
+                #print(f"aws_secret_access_key: {aws_secret_access_key}", file=sys.stderr)
                 print(f"region_name: {region_name}", file=sys.stderr)
                 print(f"endpoint_url: {endpoint_url}", file=sys.stderr)
                 
@@ -111,12 +113,18 @@ files:
                     """Custom STAC IO class that uses boto3 to read from S3."""
                 
                     def __init__(self):
+                        sts_client = boto3.client("sts")
+                        assumed_role_object=sts_client.assume_role(
+                        RoleArn=f"arn:aws:iam::account-of-role-to-assume:role/{role_name}",
+                        RoleSessionName="AssumeRoleSession1"
+                        )
+                        credentials=assumed_role_object['Credentials']
                         self.session = botocore.session.Session()
                         self.s3_client = self.session.create_client(
                             service_name="s3",
                             use_ssl=True,
-                            aws_access_key_id=aws_access_key_id,
-                            aws_secret_access_key=aws_secret_access_key,
+                            aws_access_key_id=credentials["AccessKeyId"],
+                            aws_secret_access_key=credentials["SecretAccessKey"],
                             endpoint_url=endpoint_url,
                             region_name=region_name,
                         )
@@ -133,11 +141,16 @@ files:
                         else:
                             super().write_text(dest, txt, *args, **kwargs)
                 
-                
+                sts_client = boto3.client("sts")
+                assumed_role_object=sts_client.assume_role(
+                  RoleArn=f"arn:aws:iam::account-of-role-to-assume:role/{role_name}",
+                  RoleSessionName="AssumeRoleSession1"
+                )
+                credentials=assumed_role_object['Credentials']
                 client = boto3.client(
                     "s3",
-                    aws_access_key_id=aws_access_key_id,
-                    aws_secret_access_key=aws_secret_access_key,
+                    aws_access_key_id=credentials["AccessKeyId"],
+                    aws_secret_access_key=credentials["SecretAccessKey"],
                     endpoint_url=endpoint_url,
                     region_name=region_name,
                 )
