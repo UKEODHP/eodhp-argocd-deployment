@@ -1,0 +1,53 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ingest-catalogue-data
+spec:
+  template:
+    spec:
+      serviceAccountName: resource-catalogue
+      automountServiceAccountToken: true
+      containers:
+        - name: ingest-catalogue-data
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.0.4-test3
+          command:
+            [
+              "python3",
+              "-m",
+              "configscanning.comparefiles",
+              "/tmp/catalogue-data/",
+              "catalogue-data",
+              "",
+              "catalogue-supported-data",
+            ]
+      initContainers:
+        - name: harvest-catalogue-data
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.0.4
+          command:
+            [
+              "python3",
+              "-m",
+              "configscanning.repoupdater",
+              "https://github.com/UKEODHP/catalogue-data/",
+              "/tmp",
+              "--app-id-from",
+              "app-id",
+              "--app-private-key-from",
+              "app-private-key",
+              "--pull",
+            ]
+          env:
+            - name: app-id-file
+              value: "app-id"
+            - name: app-private-key-file
+              value: "app-private-key"
+          volumeMounts:
+            - name: github-creds
+              readOnly: true
+              mountPath: "/etc/github-creds"
+      volumes:
+        - name: github-creds
+          secret:
+            secretName: github-creds
+      restartPolicy: Never
+  backoffLimit: 4
