@@ -5,7 +5,7 @@ ingress:
   hosts:
     - host: k8s.dev.eodatahub.org.uk
       paths:
-        - path: /apphub
+        - path: /apphub/
           pathType: ImplementationSpecific
   tls:
     - hosts:
