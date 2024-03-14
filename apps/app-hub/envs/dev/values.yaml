@@ -2,6 +2,7 @@ ingress:
   ingressClassName: nginx
   enabled: true
   annotations: {}
+  pathSuffix: /apphub
   hosts:
     - host: k8s.dev.eodatahub.org.uk
       paths:
