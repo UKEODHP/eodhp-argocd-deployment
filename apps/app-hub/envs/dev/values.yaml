@@ -5,7 +5,7 @@ ingress:
   hosts:
     - host: k8s.dev.eodatahub.org.uk
       paths:
-        - path: /apphub/
+        - path: /apphub
           pathType: ImplementationSpecific
   tls:
     - hosts:
@@ -18,6 +18,7 @@ jupyterhub:
   fullnameOverride: "application-hub"
   hub:
     existingSecret: app-hub
+    baseUrl: /apphub
     extraEnv:
       JUPYTERHUB_ENV: "dev"
       JUPYTERHUB_SINGLE_USER_IMAGE: "eoepca/pde-container:1.0.3"
