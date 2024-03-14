@@ -3,14 +3,15 @@ ingress:
   enabled: true
   annotations: {}
   hosts:
-    - host: apphub.dev.eodatahub.org.uk
+    - host: k8s.dev.eodatahub.org.uk
       paths:
-        - path: /
+        - path: /apphub
           pathType: ImplementationSpecific
   tls:
-    - secretName: apphub.dev.eodatahub.org.uk-tls
-      hosts:
-        - apphub.dev.eodatahub.org.uk
+    - hosts:
+        - k8s.dev.eodatahub.org.uk
+      secretName: k8s.dev.eodatahub.org.uk-tls
+
   clusterIssuer: lets-encrypt
 
 jupyterhub:
