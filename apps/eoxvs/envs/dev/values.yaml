@@ -441,15 +441,15 @@ global:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       cert-manager.io/cluster-issuer: letsencrypt
     hosts:
-      - host: vs.dev.eodatahub.org.uk
+      - host: k8s.dev.eodatahub.org.uk
     tls:
       - hosts:
-          - vs.dev.eodatahub.org.uk
-        secretName: vs.dev.eodatahub.org.uk-tls
+          - k8s.dev.eodatahub.org.uk
+        secretName: k8s.dev.eodatahub.org.uk-tls
       # hosts and tls will be redefined always
     prefix:
-      enabled: false
-      value: ""
+      enabled: true
+      value: vs
 
 # general gdal related settings
 gdal:
