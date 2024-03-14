@@ -1,5 +1,5 @@
 global.storageClass: block-storage
-httpRelativePath: /keycloak
+httpRelativePath: /keycloak/
 auth:
   adminUser: admin
   existingSecret: keycloak
