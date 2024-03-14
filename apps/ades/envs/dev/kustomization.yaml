@@ -21,7 +21,6 @@ configMapGenerator:
       - STAGEOUT_AWS_SERVICEURL=https://s3.eu-west-2.amazonaws.com
       - STAGEOUT_AWS_REGION=eu-west-2
       - STAGEOUT_OUTPUT=eodhp-ades
-      - AWS_ROLE_NAME=ADES-eodhp-dev-9ylvhv4X
 
 patches:
   - target:
@@ -63,14 +62,6 @@ patches:
             configMapKeyRef:
               name: zoo-project-dru-zoofpm-config
               key: STAGEOUT_OUTPUT
-      - op: add
-        path: /spec/template/spec/containers/0/env/-
-        value:
-          name: AWS_ROLE_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: zoo-project-dru-zoofpm-config
-              key: AWS_ROLE_NAME
       # - op: add
       #   path: /spec/template/spec/containers/0/env/-
       #   value:
