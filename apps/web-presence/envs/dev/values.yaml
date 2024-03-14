@@ -12,6 +12,6 @@ eox_viewserver:
   url: https://k8s.dev.eodatahub.org.uk/vs
 
 stac_browser:
-  url: https://dev.eodatahub.org.uk/stac/v3.1.1
+  url: https://dev.eodatahub.org.uk/stac/v3.1.1/index.html
 
 storage_class: block-storage
