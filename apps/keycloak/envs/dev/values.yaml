@@ -11,7 +11,8 @@ postgresql:
 ingress:
   enabled: true
   ingressClassName: nginx
-  hostname: keycloak.dev.eodatahub.org.uk
+  hostname: k8s.dev.eodatahub.org.uk
+  path: /keycloak
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
   tls: true
