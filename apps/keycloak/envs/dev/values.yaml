@@ -1,4 +1,5 @@
 global.storageClass: block-storage
+httpRelativePath: /keycloak
 auth:
   adminUser: admin
   existingSecret: keycloak
@@ -12,10 +13,8 @@ ingress:
   enabled: true
   ingressClassName: nginx
   hostname: k8s.dev.eodatahub.org.uk
-  path: /keycloak(/|$)(.*)
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
   tls: true
 proxy: edge
 keycloakConfigCli:
