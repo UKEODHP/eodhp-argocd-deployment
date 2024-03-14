@@ -223,14 +223,14 @@ ingress:
     nginx.ingress.kubernetes.io/auth-secret: basic-auth
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
   hosts:
-    - host: ades.dev.eodatahub.org.uk
+    - host: k8s.dev.eodatahub.org.uk
       paths:
-        - path: /
+        - path: /ades
           pathType: ImplementationSpecific
   tls:
     - hosts:
-        - ades.dev.eodatahub.org.uk
-      secretName: ades.dev.eodatahub.org.uk-tls
+        - k8s.dev.eodatahub.org.uk
+      secretName: k8s.dev.eodatahub.org.uk-tls
 persistence:
   procServicesStorageClass: file-storage
   storageClass: file-storage
