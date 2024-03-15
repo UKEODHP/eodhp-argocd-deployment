@@ -122,6 +122,7 @@ files:
                               region_name=region_name,
                             )
                         else:
+                            print("using normal client - in class")
                             self.s3_client = self.session.create_client("s3")
                 
                     def write_text(self, dest, txt, *args, **kwargs):
@@ -144,6 +145,7 @@ files:
                         region_name=region_name,
                     )
                 else:
+                    print("using normal client")
                     client = boto3.client("s3")
                 
                 StacIO.set_default(CustomStacIO)
