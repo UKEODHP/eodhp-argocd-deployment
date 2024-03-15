@@ -22,6 +22,7 @@ jupyterhub:
     extraEnv:
       JUPYTERHUB_ENV: dev
       BASE_URL: /apphub
+      APP_HUB_NAMESPACE: proc
       JUPYTERHUB_SINGLE_USER_IMAGE: eoepca/pde-container:1.0.3
       OAUTH_CALLBACK_URL: https://dev.eodatahub.org.uk/apphub/hub/oauth_callback
       OAUTH2_USERDATA_URL: https://dev.eodatahub.org.uk/keycloak/realms/eodhp/protocol/openid-connect/userinfo
