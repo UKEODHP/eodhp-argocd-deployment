@@ -11,7 +11,7 @@ helmCharts:
   - name: application-hub
     repo: https://eoepca.github.io/helm-charts/
     releaseName: app-hub
-    version: 2.0.55
+    version: 2.0.59
     valuesFile: values.yaml
     namespace: proc
 

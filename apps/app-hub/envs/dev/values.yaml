@@ -2,7 +2,6 @@ ingress:
   ingressClassName: nginx
   enabled: true
   annotations: {}
-  # pathSuffix: /apphub
   hosts:
     - host: k8s.dev.eodatahub.org.uk
       paths:
@@ -19,7 +18,7 @@ jupyterhub:
   fullnameOverride: "application-hub"
   hub:
     existingSecret: app-hub
-    # baseUrl: /apphub
+    baseUrl: /apphub
     extraEnv:
       JUPYTERHUB_ENV: "dev"
       JUPYTERHUB_SINGLE_USER_IMAGE: "eoepca/pde-container:1.0.3"
