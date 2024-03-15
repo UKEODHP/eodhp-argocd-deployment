@@ -441,11 +441,11 @@ global:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       cert-manager.io/cluster-issuer: letsencrypt
     hosts:
-      - host: vs.dev.eodatahub.org.uk
+      - host: vs.dev.eodhp.eco-ke-staging.org
     tls:
       - hosts:
-          - vs.dev.eodatahub.org.uk
-        secretName: vs.dev.eodatahub.org.uk-tls
+          - vs.dev.eodhp.eco-ke-staging.org
+        secretName: vs.dev.eodhp.eco-ke-staging.org-tls
       # hosts and tls will be redefined always
     prefix:
       enabled: false

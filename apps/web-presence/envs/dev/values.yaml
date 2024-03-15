@@ -1,4 +1,4 @@
-app_url: dev.eodatahub.org.uk
+app_url: dev.eodhp.eco-ke-staging.org
 image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.3
 
 database:
@@ -6,12 +6,12 @@ database:
   sql_password: "password"
 
 ingress:
-  host: dev.eodatahub.org.uk
+  host: dev.eodhp.eco-ke-staging.org
 
 eox_viewserver:
-  url: https://vs.dev.eodatahub.org.uk/
+  url: https://vs.dev.eodhp.eco-ke-staging.org/
 
 stac_browser:
-  url: https://stac.dev.eodatahub.org.uk/v3.1.1
+  url: https://stac.dev.eodhp.eco-ke-staging.org/v3.1.1
 
 storage_class: block-storage

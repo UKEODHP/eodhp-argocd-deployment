@@ -24,8 +24,8 @@ patches:
         path: /spec/tls
         value: 
           - hosts: 
-              - dev.eodatahub.org.uk
-            secretName: dev.eodatahub.org.uk-tls
+              - dev.eodhp.eco-ke-staging.org
+            secretName: dev.eodhp.eco-ke-staging.org-tls
       - op: add
         path: /metadata/annotations/cert-manager.io~1cluster-issuer
         value: lets-encrypt
