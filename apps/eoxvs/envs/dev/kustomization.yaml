@@ -5,7 +5,7 @@ namespace: eox
 
 resources:
   - ../../base
-  - secrets.yaml
+
 helmCharts:
   - name: vs
     repo: https://charts-public.hub.eox.at/
