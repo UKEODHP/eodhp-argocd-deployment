@@ -90,8 +90,8 @@ patches:
       # Configure service account manually
       - op: add
         path: /automountServiceAccountToken
-        value: false
-      - op: add
-        path: /metadata/name
-        value: ades
+        value: true
+  #     - op: add
+  #       path: /metadata/name
+  #       value: ades
   - path: delete-pvc-patch.yaml
