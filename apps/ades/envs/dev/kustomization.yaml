@@ -83,7 +83,15 @@ patches:
       - op: add
         path: /spec/template/spec/serviceAccountName
         value: zoo-project-dru
-      # - op: add
-      #   path: /spec/template/spec/automountServiceAccountToken
-      #   value: true
+  - target:
+      kind: ServiceAccount
+      name: zoo-project-dru
+    patch: |-
+      # Configure service account manually
+      - op: add
+        path: /automountServiceAccountToken
+        value: false
+      - op: add
+        path: /metadata/name
+        value: ades
   - path: delete-pvc-patch.yaml
