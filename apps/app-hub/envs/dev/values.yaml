@@ -12,8 +12,6 @@ ingress:
         - k8s.dev.eodatahub.org.uk
       secretName: k8s.dev.eodatahub.org.uk-tls
 
-  clusterIssuer: lets-encrypt
-
 jupyterhub:
   fullnameOverride: "application-hub"
   hub:
