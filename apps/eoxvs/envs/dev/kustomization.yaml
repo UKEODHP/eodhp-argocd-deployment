@@ -5,6 +5,7 @@ namespace: eox
 
 resources:
   - ../../base
+  - secrets.yaml
 
 helmCharts:
   - name: vs
@@ -25,9 +26,3 @@ patches:
       - op: add
         path: /spec/ingressClassName
         value: nginx
-  - target:
-      kind: Ingress
-    patch: |-
-      - op: add
-        path: /metadata/annotations/cert-manager.io~1cluster-issuer
-        value: lets-encrypt
