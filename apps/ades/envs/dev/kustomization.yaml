@@ -80,4 +80,10 @@ patches:
             configMapKeyRef:
               name: zoo-project-dru-zoofpm-config
               key: STAGEOUT_AWS_SECRET_ACCESS_KEY
+      - op: add
+        path: /spec/template/spec/serviceAccountName
+        value: zoo-project-dru
+      # - op: add
+      #   path: /spec/template/spec/automountServiceAccountToken
+      #   value: true
   - path: delete-pvc-patch.yaml
