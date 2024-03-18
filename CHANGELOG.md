@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.8.0
+
+- Added job to add to resource catalogue S3 bucket from GitHub repo for Element84 data
+
 ## v0.7.0
 
 - Added job to add to resource catalogue S3 bucket from GitHub repo
