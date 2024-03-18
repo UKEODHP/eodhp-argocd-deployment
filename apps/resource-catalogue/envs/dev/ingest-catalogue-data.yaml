@@ -9,7 +9,7 @@ spec:
       automountServiceAccountToken: true
       containers:
         - name: ingest-catalogue-data
-          image: public.ecr.aws/n1b3o1k2/config-scanning:0.1.0
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.1.1
           command:
             [
               "python3",
@@ -17,15 +17,14 @@ spec:
               "configscanning.comparefiles",
               "/tmp/catalogue-data/github.com/UKEODHP/catalogue-data/",
               "catalogue-data",
-              "",
-              "supported",
+              "catalogue-data",
             ]
           volumeMounts:
             - mountPath: /tmp
               name: temporary-storage
       initContainers:
         - name: harvest-catalogue-data
-          image: public.ecr.aws/n1b3o1k2/config-scanning:0.1.0
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.1.1
           command:
             - "/bin/sh"
             - "-c"
