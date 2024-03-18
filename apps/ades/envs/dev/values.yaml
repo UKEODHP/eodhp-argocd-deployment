@@ -174,7 +174,6 @@ files:
                             os.path.join(subfolder, collection_id, item.id, os.path.basename(asset.href))
                         )
                         print(f"upload {asset.href} to s3://{bucket}/{s3_path}",file=sys.stderr)
-                        print("s3_path " + s3_path)
                         client.upload_file(
                             asset.get_absolute_href(),
                             bucket,
