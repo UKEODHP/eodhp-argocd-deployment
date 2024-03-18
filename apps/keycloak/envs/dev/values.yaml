@@ -13,8 +13,6 @@ ingress:
   enabled: true
   ingressClassName: nginx
   hostname: k8s.dev.eodatahub.org.uk
-  annotations:
-    cert-manager.io/cluster-issuer: lets-encrypt
   tls: true
 proxy: edge
 keycloakConfigCli:

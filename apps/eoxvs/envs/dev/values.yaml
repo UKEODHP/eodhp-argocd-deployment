@@ -439,14 +439,12 @@ global:
       kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
       nginx.ingress.kubernetes.io/enable-cors: "true"
-      cert-manager.io/cluster-issuer: letsencrypt
     hosts:
       - host: k8s.dev.eodatahub.org.uk
     tls:
       - hosts:
           - k8s.dev.eodatahub.org.uk
         secretName: k8s.dev.eodatahub.org.uk-tls
-      # hosts and tls will be redefined always
     prefix:
       enabled: true
       value: vs
