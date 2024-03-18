@@ -9,7 +9,7 @@ ingress:
   host: k8s.dev.eodatahub.org.uk
 
 eox_viewserver:
-  url: https://k8s.dev.eodatahub.org.uk/vs
+  url: https://dev.eodatahub.org.uk/vs
 
 stac_browser:
   url: https://dev.eodatahub.org.uk/stac/v3.1.1/index.html

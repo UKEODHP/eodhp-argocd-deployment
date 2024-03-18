@@ -43,10 +43,10 @@ keycloakConfigCli:
             "alwaysDisplayInConsole": true,
             "clientAuthenticatorType": "client-secret",
             "redirectUris": [
-              "https://apphub.dev.eodatahub.org.uk/*"
+              "https://dev.eodatahub.org.uk/apphub/*"
             ],
             "webOrigins": [
-              "https://apphub.dev.eodatahub.org.uk"
+              "https://dev.eodatahub.org.uk/apphub"
             ],
             "standardFlowEnabled": true,
             "implicitFlowEnabled": false,
