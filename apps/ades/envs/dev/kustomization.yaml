@@ -37,7 +37,7 @@ patches:
       kind: Deployment
       name: zoo-project-dru-zoofpm
     patch: |-
-      # Add STAGEOUT secrets as environment variables
+      # Add STAGEOUT values as environment variables
       - op: add
         path: /spec/template/spec/containers/0/env/-
         value:
