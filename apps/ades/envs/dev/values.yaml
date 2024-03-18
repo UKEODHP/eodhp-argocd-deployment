@@ -113,7 +113,7 @@ files:
                 
                     def __init__(self):
                         self.session = botocore.session.Session()
-                        if False:
+                        if os.environ["AWS_ACCESS_KEY_ID"] and os.environ["AWS_SECRET_ACCESS_KEY"]:
                             self.s3_client = self.session.create_client(
                               service_name="s3",
                               use_ssl=True,
@@ -137,7 +137,7 @@ files:
                             )
                         else:
                             super().write_text(dest, txt, *args, **kwargs)
-                if False:
+                if os.environ["AWS_ACCESS_KEY_ID"] and os.environ["AWS_SECRET_ACCESS_KEY"]:
                     client = boto3.client(
                         "s3",
                         aws_access_key_id=aws_access_key_id,
