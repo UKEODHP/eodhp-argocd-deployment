@@ -24,5 +24,5 @@ patches:
         path: /spec/tls
         value: 
           - hosts: 
-              - k8s.dev.eodatahub.org.uk
-            secretName: k8s.dev.eodatahub.org.uk-tls
+              - dev.eodatahub.org.uk
+            secretName: dev.eodatahub.org.uk-tls

@@ -1,4 +1,4 @@
-app_url: k8s.dev.eodatahub.org.uk
+app_url: dev.eodatahub.org.uk
 image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.3
 
 database:
@@ -6,7 +6,7 @@ database:
   sql_password: "password"
 
 ingress:
-  host: k8s.dev.eodatahub.org.uk
+  host: dev.eodatahub.org.uk
 
 eox_viewserver:
   url: https://dev.eodatahub.org.uk/vs

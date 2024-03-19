@@ -28,7 +28,7 @@ patches:
         value: nginx
       - op: add
         path: /metadata/annotations/external-dns.alpha.kubernetes.io~1hostname
-        value: "*.k8s.dev.eodatahub.org.uk"
+        value: "*.dev.eodatahub.org.uk"
       - op: remove
         path: /metadata/annotations/cert-manager.io~1cluster-issuer
   - target:

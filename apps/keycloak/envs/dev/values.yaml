@@ -12,7 +12,7 @@ postgresql:
 ingress:
   enabled: true
   ingressClassName: nginx
-  hostname: k8s.dev.eodatahub.org.uk
+  hostname: dev.eodatahub.org.uk
   tls: true
 proxy: edge
 keycloakConfigCli:
