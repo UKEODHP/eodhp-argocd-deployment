@@ -92,19 +92,11 @@ files:
                 bucket = sys.argv[2]
                 subfolder = sys.argv[3]
                 collection_id = sys.argv[4]
-                print(f"cat_url: {cat_url}", file=sys.stderr)
-                print(f"bucket: {bucket}", file=sys.stderr)
-                print(f"subfolder: {subfolder}", file=sys.stderr)
-                print(f"collection_id: {collection_id}", file=sys.stderr)
                 if os.environ["AWS_ACCESS_KEY_ID"] and os.environ["AWS_SECRET_ACCESS_KEY"]:
                     aws_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
                     aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
-                    print(f"aws_access_key_id: {aws_access_key_id}", file=sys.stderr)
-                    print(f"aws_secret_access_key: {aws_secret_access_key}", file=sys.stderr)
                 region_name = os.environ["AWS_REGION"]
                 endpoint_url = os.environ["AWS_S3_ENDPOINT"]
-                print(f"region_name: {region_name}", file=sys.stderr)
-                print(f"endpoint_url: {endpoint_url}", file=sys.stderr)
                 
                 shutil.copytree(cat_url, "/tmp/catalog")
                 cat = pystac.read_file(os.path.join("/tmp/catalog", "catalog.json"))
