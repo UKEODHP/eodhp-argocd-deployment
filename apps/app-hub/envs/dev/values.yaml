@@ -3,31 +3,33 @@ ingress:
   enabled: true
   annotations: {}
   hosts:
-    - host: apphub.dev.eodatahub.org.uk
+    - host: dev.eodatahub.org.uk
       paths:
-        - path: /
+        - path: /apphub
           pathType: ImplementationSpecific
   tls:
-    - secretName: apphub.dev.eodatahub.org.uk-tls
-      hosts:
-        - apphub.dev.eodatahub.org.uk
-  clusterIssuer: lets-encrypt
+    - hosts:
+        - dev.eodatahub.org.uk
+      secretName: dev.eodatahub.org.uk-tls
 
 jupyterhub:
   fullnameOverride: "application-hub"
   hub:
     existingSecret: app-hub
+    baseUrl: /apphub
     extraEnv:
-      JUPYTERHUB_ENV: "dev"
-      JUPYTERHUB_SINGLE_USER_IMAGE: "eoepca/pde-container:1.0.3"
-      OAUTH_CALLBACK_URL: https://apphub.dev.eodatahub.org.uk/hub/oauth_callback
-      OAUTH2_USERDATA_URL: https://keycloak.dev.eodatahub.org.uk/realms/eodhp/protocol/openid-connect/userinfo
-      OAUTH2_TOKEN_URL: https://keycloak.dev.eodatahub.org.uk/realms/eodhp/protocol/openid-connect/token
-      OAUTH2_AUTHORIZE_URL: https://keycloak.dev.eodatahub.org.uk/realms/eodhp/protocol/openid-connect/auth
-      OAUTH_LOGOUT_REDIRECT_URL: "https://apphub.dev.eodatahub.org.uk"
-      OAUTH2_USERNAME_KEY: "preferred_username"
+      JUPYTERHUB_ENV: dev
+      BASE_URL: /apphub
+      APP_HUB_NAMESPACE: proc
+      JUPYTERHUB_SINGLE_USER_IMAGE: eoepca/pde-container:1.0.3
+      OAUTH_CALLBACK_URL: https://dev.eodatahub.org.uk/apphub/hub/oauth_callback
+      OAUTH2_USERDATA_URL: https://dev.eodatahub.org.uk/keycloak/realms/eodhp/protocol/openid-connect/userinfo
+      OAUTH2_TOKEN_URL: https://dev.eodatahub.org.uk/keycloak/realms/eodhp/protocol/openid-connect/token
+      OAUTH2_AUTHORIZE_URL: https://dev.eodatahub.org.uk/keycloak/realms/eodhp/protocol/openid-connect/auth
+      OAUTH_LOGOUT_REDIRECT_URL: "https://dev.eodatahub.org.uk/apphub"
+      OAUTH2_USERNAME_KEY: preferred_username
       STORAGE_CLASS: block-storage
-      RESOURCE_MANAGER_WORKSPACE_PREFIX: "ws"
+      RESOURCE_MANAGER_WORKSPACE_PREFIX: ws
       JUPYTERHUB_CRYPT_KEY:
         valueFrom:
           secretKeyRef:

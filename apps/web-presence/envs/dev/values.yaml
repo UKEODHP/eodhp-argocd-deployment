@@ -9,9 +9,9 @@ ingress:
   host: dev.eodatahub.org.uk
 
 eox_viewserver:
-  url: https://vs.dev.eodatahub.org.uk/
+  url: https://dev.eodatahub.org.uk/vs
 
 stac_browser:
-  url: https://stac.dev.eodatahub.org.uk/v3.1.1
+  url: https://dev.eodatahub.org.uk/stac/v3.1.1
 
 storage_class: block-storage

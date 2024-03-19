@@ -68,3 +68,7 @@ The EO DataHub Platform deployment expects the following resources to be availab
 ### Secret Stores
 
 - "secret-store" : A ClusterSecretStore from external-secrets helm chart (https://charts.external-secrets.io).
+
+### TLS Certificates
+
+- Platform expects TLS secrets to be available in all namespaces under `%base_url-tls`.

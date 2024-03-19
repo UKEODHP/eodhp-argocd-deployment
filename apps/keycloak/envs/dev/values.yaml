@@ -1,4 +1,5 @@
 global.storageClass: block-storage
+httpRelativePath: /keycloak/
 auth:
   adminUser: admin
   existingSecret: keycloak
@@ -11,9 +12,7 @@ postgresql:
 ingress:
   enabled: true
   ingressClassName: nginx
-  hostname: keycloak.dev.eodatahub.org.uk
-  annotations:
-    cert-manager.io/cluster-issuer: lets-encrypt
+  hostname: dev.eodatahub.org.uk
   tls: true
 proxy: edge
 keycloakConfigCli:
@@ -44,10 +43,10 @@ keycloakConfigCli:
             "alwaysDisplayInConsole": true,
             "clientAuthenticatorType": "client-secret",
             "redirectUris": [
-              "https://apphub.dev.eodatahub.org.uk/*"
+              "https://dev.eodatahub.org.uk/apphub/*"
             ],
             "webOrigins": [
-              "https://apphub.dev.eodatahub.org.uk"
+              "https://dev.eodatahub.org.uk/apphub"
             ],
             "standardFlowEnabled": true,
             "implicitFlowEnabled": false,

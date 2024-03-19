@@ -26,6 +26,3 @@ patches:
           - hosts: 
               - dev.eodatahub.org.uk
             secretName: dev.eodatahub.org.uk-tls
-      - op: add
-        path: /metadata/annotations/cert-manager.io~1cluster-issuer
-        value: lets-encrypt
