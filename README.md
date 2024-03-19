@@ -71,4 +71,4 @@ The EO DataHub Platform deployment expects the following resources to be availab
 
 ### TLS Certificates
 
-- Platform expects TLS secrets to be available in all namespaces under `k8s.%base_url-tls`.
+- Platform expects TLS secrets to be available in all namespaces under `%base_url-tls`.
