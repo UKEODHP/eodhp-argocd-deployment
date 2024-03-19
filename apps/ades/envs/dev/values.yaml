@@ -52,12 +52,12 @@ files:
                       ${
                           if( !Array.isArray(inputs.wf_outputs) ) 
                           {
-                              return inputs.wf_outputs.path + "/catalog.json";
+                              return inputs.wf_outputs.path;
                           }
                           var args=[];
                           for (var i = 0; i < inputs.wf_outputs.length; i++) 
                           {
-                              args.push(inputs.wf_outputs[i].path + "/catalog.json");
+                              args.push(inputs.wf_outputs[i].path);
                           }
                           return args;
                       }
