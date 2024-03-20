@@ -223,7 +223,6 @@ workflow:
   storageClass: file-storage
 ingress:
   enabled: true
-
   annotations:
     kubernetes.io/ingress.class: nginx
     ingress.kubernetes.io/ssl-redirect: "false"
@@ -232,6 +231,7 @@ ingress:
     nginx.ingress.kubernetes.io/auth-secret: basic-auth
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosturl: https://dev.eodatahub.org.uk/ades
   hosts:
     - host: dev.eodatahub.org.uk
       paths:
