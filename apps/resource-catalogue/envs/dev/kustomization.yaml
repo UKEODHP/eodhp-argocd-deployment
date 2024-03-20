@@ -7,5 +7,6 @@ resources:
   - ../../base
   - ingest-catalogue-data.yaml
   - ingest-catalogue-supported-data.yaml
+  - ingest-catalogue-element84-data.yaml
   - secrets.yaml
   - service-account.yaml
