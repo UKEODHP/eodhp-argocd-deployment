@@ -97,10 +97,6 @@ files:
                     aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
                 region_name = os.environ["AWS_REGION"]
                 endpoint_url = os.environ["AWS_S3_ENDPOINT"]
-                print(f"aws_access_key_id: {aws_access_key_id}", file=sys.stderr)
-                print(f"aws_secret_access_key: {aws_secret_access_key}", file=sys.stderr)
-                print(f"region_name: {region_name}", file=sys.stderr)
-                print(f"endpoint_url: {endpoint_url}", file=sys.stderr)
                 
                 shutil.copytree(cat_url, "/tmp/catalog")
                 cat = pystac.read_file(os.path.join("/tmp/catalog", "catalog.json"))
