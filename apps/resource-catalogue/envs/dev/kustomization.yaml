@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: rc
+
+resources:
+  - ../../base
+  - ingest-catalogue-data.yaml
+  - ingest-catalogue-supported-data.yaml
+  - ingest-catalogue-element84-data.yaml
+  - secrets.yaml
+  - service-account.yaml

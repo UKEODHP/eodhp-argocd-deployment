@@ -1,5 +1,13 @@
 # Change Log
 
+## v0.8.0
+
+- Added job to add to resource catalogue S3 bucket from GitHub repo for Element84 data
+
+## v0.7.0
+
+- Added job to add to resource catalogue S3 bucket from GitHub repo
+
 ## v0.6.0
 
 - Added STAC browser link from web presence

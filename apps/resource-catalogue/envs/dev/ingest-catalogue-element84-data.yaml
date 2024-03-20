@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ingest-catalogue-element84-data
+spec:
+  template:
+    spec:
+      serviceAccountName: resource-catalogue
+      automountServiceAccountToken: true
+      containers:
+        - name: ingest-catalogue-element84-data
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.1.1
+          command:
+            [
+              "python3",
+              "-m",
+              "configscanning.comparefiles",
+              "/tmp/element84-data/github.com/UKEODHP/element84-data/",
+              "catalogue-data",
+              "catalogue-data/element84-data",
+            ]
+          volumeMounts:
+            - mountPath: /tmp
+              name: temporary-storage
+      initContainers:
+        - name: harvest-catalogue-element84-data
+          image: public.ecr.aws/n1b3o1k2/config-scanning:0.1.1
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |  
+              mkdir -p /tmp/element84-data && python3 -m configscanning.repoupdater https://github.com/UKEODHP/element84-data /tmp/element84-data --app-id-from app-id --app-private-key-from app-private-key --pull
+              python3 -m configscanning.repoupdater https://github.com/UKEODHP/element84-data /tmp/element84-data --app-id-from app-id --app-private-key-from app-private-key --pull
+          env:
+            - name: app-id-file
+              value: "app-id"
+            - name: app-private-key-file
+              value: "app-private-key"
+          volumeMounts:
+            - name: github-creds
+              readOnly: true
+              mountPath: "/etc/github-creds"
+            - mountPath: /tmp
+              name: temporary-storage
+      volumes:
+        - name: github-creds
+          secret:
+            secretName: github-creds
+        - name: temporary-storage
+          emptyDir: {}
+      restartPolicy: Never
+  backoffLimit: 4
