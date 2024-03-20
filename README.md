@@ -73,3 +73,7 @@ The EO DataHub Platform deployment expects the following resources to be availab
 
 The resource catalogue depends on there being a service account named `s3-access` in the namespace `rc`. This must 
 give read/write permissions for the resource catalogue's S3 bucket.
+
+### TLS Certificates
+
+- Platform expects TLS secrets to be available in all namespaces under `%base_url-tls`.

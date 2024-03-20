@@ -48,7 +48,19 @@ files:
         - python
         - stageout.py
       arguments:
-        - $( inputs.wf_outputs.path )
+        - valueFrom: |
+                      ${
+                          if( !Array.isArray(inputs.wf_outputs) ) 
+                          {
+                              return inputs.wf_outputs.path;
+                          }
+                          var args=[];
+                          for (var i = 0; i < inputs.wf_outputs.length; i++) 
+                          {
+                              args.push(inputs.wf_outputs[i].path);
+                          }
+                          return args;
+                      }
         - $( inputs.STAGEOUT_OUTPUT )
         - $( inputs.process )
         - $( inputs.collection_id )
@@ -80,19 +92,11 @@ files:
                 bucket = sys.argv[2]
                 subfolder = sys.argv[3]
                 collection_id = sys.argv[4]
-                print(f"cat_url: {cat_url}", file=sys.stderr)
-                print(f"bucket: {bucket}", file=sys.stderr)
-                print(f"subfolder: {subfolder}", file=sys.stderr)
-                print(f"collection_id: {collection_id}", file=sys.stderr)
-                
-                aws_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
-                aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
+                if os.environ["AWS_ACCESS_KEY_ID"] and os.environ["AWS_SECRET_ACCESS_KEY"]:
+                    aws_access_key_id = os.environ["AWS_ACCESS_KEY_ID"]
+                    aws_secret_access_key = os.environ["AWS_SECRET_ACCESS_KEY"]
                 region_name = os.environ["AWS_REGION"]
                 endpoint_url = os.environ["AWS_S3_ENDPOINT"]
-                print(f"aws_access_key_id: {aws_access_key_id}", file=sys.stderr)
-                print(f"aws_secret_access_key: {aws_secret_access_key}", file=sys.stderr)
-                print(f"region_name: {region_name}", file=sys.stderr)
-                print(f"endpoint_url: {endpoint_url}", file=sys.stderr)
                 
                 shutil.copytree(cat_url, "/tmp/catalog")
                 cat = pystac.read_file(os.path.join("/tmp/catalog", "catalog.json"))
@@ -102,14 +106,17 @@ files:
                 
                     def __init__(self):
                         self.session = botocore.session.Session()
-                        self.s3_client = self.session.create_client(
-                            service_name="s3",
-                            use_ssl=True,
-                            aws_access_key_id=aws_access_key_id,
-                            aws_secret_access_key=aws_secret_access_key,
-                            endpoint_url=endpoint_url,
-                            region_name=region_name,
-                        )
+                        if os.environ["AWS_ACCESS_KEY_ID"] and os.environ["AWS_SECRET_ACCESS_KEY"]:
+                            self.s3_client = self.session.create_client(
+                              service_name="s3",
+                              use_ssl=True,
+                              aws_access_key_id=aws_access_key_id,
+                              aws_secret_access_key=aws_secret_access_key,
+                              endpoint_url=endpoint_url,
+                              region_name=region_name,
+                            )
+                        else:
+                            self.s3_client = self.session.create_client("s3")
                 
                     def write_text(self, dest, txt, *args, **kwargs):
                         parsed = urlparse(dest)
@@ -122,15 +129,16 @@ files:
                             )
                         else:
                             super().write_text(dest, txt, *args, **kwargs)
-                
-                
-                client = boto3.client(
-                    "s3",
-                    aws_access_key_id=aws_access_key_id,
-                    aws_secret_access_key=aws_secret_access_key,
-                    endpoint_url=endpoint_url,
-                    region_name=region_name,
-                )
+                if os.environ["AWS_ACCESS_KEY_ID"] and os.environ["AWS_SECRET_ACCESS_KEY"]:
+                    client = boto3.client(
+                        "s3",
+                        aws_access_key_id=aws_access_key_id,
+                        aws_secret_access_key=aws_secret_access_key,
+                        endpoint_url=endpoint_url,
+                        region_name=region_name,
+                    )
+                else:
+                    client = boto3.client("s3")
                 
                 StacIO.set_default(CustomStacIO)
                 
@@ -208,29 +216,31 @@ workflow:
     STAGEIN_AWS_ACCESS_KEY_ID: test
     STAGEIN_AWS_SECRET_ACCESS_KEY: test
     STAGEIN_AWS_REGION: RegionOne
+    STAGEOUT_AWS_ACCESS_KEY_ID: ""
+    STAGEOUT_AWS_SECRET_ACCESS_KEY: ""
   nodeSelector:
     minikube.k8s.io/primary: "true"
   storageClass: file-storage
 ingress:
   enabled: true
-
   annotations:
     kubernetes.io/ingress.class: nginx
     ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    cert-manager.io/cluster-issuer: lets-encrypt
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/auth-secret: basic-auth
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosturl: https://dev.eodatahub.org.uk/ades
   hosts:
-    - host: ades.dev.eodatahub.org.uk
+    - host: dev.eodatahub.org.uk
       paths:
-        - path: /
+        - path: /ades(/|$)(.*)
           pathType: ImplementationSpecific
   tls:
     - hosts:
-        - ades.dev.eodatahub.org.uk
-      secretName: ades.dev.eodatahub.org.uk-tls
+        - dev.eodatahub.org.uk
+      secretName: dev.eodatahub.org.uk-tls
 persistence:
   procServicesStorageClass: file-storage
   storageClass: file-storage

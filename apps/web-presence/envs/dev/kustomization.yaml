@@ -11,7 +11,7 @@ helmCharts:
   - name: eodhp-web-presence
     repo: oci://public.ecr.aws/n1b3o1k2/helm
     releaseName: web-presence
-    version: 0.1.2
+    version: 0.1.3
     valuesFile: values.yaml
     namespace: web
 
@@ -26,6 +26,3 @@ patches:
           - hosts: 
               - dev.eodatahub.org.uk
             secretName: dev.eodatahub.org.uk-tls
-      - op: add
-        path: /metadata/annotations/cert-manager.io~1cluster-issuer
-        value: lets-encrypt
