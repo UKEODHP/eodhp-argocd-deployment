@@ -28,6 +28,5 @@ patches:
   - target:
       kind: Ingress
     patch: |-
-      - op: add
+      - op: remove
         path: /metadata/annotations/cert-manager.io~1cluster-issuer
-        value: lets-encrypt

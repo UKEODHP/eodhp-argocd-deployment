@@ -439,17 +439,15 @@ global:
       kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
       nginx.ingress.kubernetes.io/enable-cors: "true"
-      cert-manager.io/cluster-issuer: letsencrypt
     hosts:
-      - host: vs.test.eodhp.eco-ke-staging.com
+      - host: test.eodatahub.org.uk
     tls:
       - hosts:
-          - vs.test.eodhp.eco-ke-staging.com
-        secretName: vs.test.eodhp.eco-ke-staging.com-tls
-      # hosts and tls will be redefined always
+          - test.eodatahub.org.uk
+        secretName: test.eodatahub.org.uk-tls
     prefix:
-      enabled: false
-      value: ""
+      enabled: true
+      value: vs
 
 # general gdal related settings
 gdal:
