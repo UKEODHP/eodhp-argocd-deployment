@@ -18,4 +18,7 @@ resource_catalogue:
 catalogue_data:
   url: https://dev.eodatahub.org.uk/catalogue-data/catalog.json
 
+notebooks:
+  url: https://dev.eodatahub.org.uk/apphub
+
 storage_class: block-storage
