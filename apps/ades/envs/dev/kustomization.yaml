@@ -62,4 +62,11 @@ patches:
             configMapKeyRef:
               name: zoo-project-dru-zoofpm-config
               key: STAGEOUT_OUTPUT
+  - target:
+      kind: ServiceAccount
+      name: zoo-project-dru-processing-manager
+    patch: |-
+      - op: add
+        path: /metadata/annotations/eks.amazonaws.com~1role-arn
+        value: arn:aws:iam::312280911266:role/ADES-eodhp-dev-9ylvhv4X
   - path: delete-pvc-patch.yaml
