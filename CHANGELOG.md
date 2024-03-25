@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.9.0
+
+- Added notebook link from web presence
+
 ## v0.8.0
 
 - Added job to add to resource catalogue S3 bucket from GitHub repo for Element84 data
