@@ -1,6 +1,6 @@
 apiVersion: builtin
 kind: ConfigMapGenerator
-behavior: replace
+behavior: merge
 metadata:
   name: application-hub-jupyter-config
 files:
