@@ -5,3 +5,4 @@ metadata:
   name: application-hub-jupyter-config
 files:
   - files/jupyter_config.py
+  - files/config.yml
