@@ -1,0 +1,40 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: application-hub-hub
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - namespaces
+      - persistentvolumeclaims
+      - secrets
+      - services
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - get
+      - watch
+      - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: application-hub-hub
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: application-hub-hub
+subjects:
+  - kind: ServiceAccount
+    name: application-hub-hub
+    namespace: proc
