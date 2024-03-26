@@ -8,7 +8,7 @@ spec:
     - host: dev.eodatahub.org.uk
       http:
         paths:
-          - path: /stac-api
+          - path: /stac-api(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
               service:
