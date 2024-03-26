@@ -15,10 +15,9 @@ esConfig:
     xpack.security.enabled: false
     xpack.security.transport.ssl.enabled: false
     xpack.security.enrollment.enabled: false
-    persistent:
-      cluster:
-        routing:
-          allocation.disk.threshold_enabled: false
+    cluster:
+      routing:
+        allocation.disk.threshold_enabled: false
 #     ## Cluster Settings
 #     cluster.name: stac-cluster
 #     node.name: es01
