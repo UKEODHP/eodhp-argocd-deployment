@@ -35,6 +35,24 @@ keycloakConfigCli:
         "requiredCredentials": [
           "password"
         ],
+        "identityProviders": [
+          {
+            "alias": "github",
+            "providerId": "github",
+            "enabled": true,
+            "updateProfileFirstLoginMode": "on",
+            "trustEmail": false,
+            "storeToken": false,
+            "addReadTokenRoleOnCreate": false,
+            "authenticateByDefault": false,
+            "linkOnly": false,
+            "firstBrokerLoginFlowAlias": "first broker login",
+            "config": {
+              "clientSecret": "**********",
+              "clientId": "c83f1231b8cdce667e8c"
+            }
+          }
+        ],
         "clients": [
           {
             "clientId": "application-hub",
