@@ -62,6 +62,24 @@ patches:
             configMapKeyRef:
               name: zoo-project-dru-zoofpm-config
               key: STAGEOUT_OUTPUT
+      - op: remove
+        path: /spec/template/spec/containers/0/volumeMounts/8
+      - op: add
+        path: /spec/template/spec/containers/0/volumeMounts/-
+        value:
+          mountPath: /opt/zooservices_user
+          name: ades-processing-services
+  - target:
+      kind: Deployment
+      name: zoo-project-dru-zookernel
+    patch: |-
+      - op: remove
+        path: /spec/template/spec/containers/0/volumeMounts/20
+      - op: add
+        path: /spec/template/spec/containers/0/volumeMounts/-
+        value:
+          mountPath: /opt/zooservices_user
+          name: ades-processing-services
   - target:
       kind: ServiceAccount
       name: zoo-project-dru-processing-manager
@@ -76,4 +94,5 @@ patches:
       - op: add
         path: /spec/persistentVolumeReclaimPolicy
         value: Retain
+
   - path: delete-pvc-patch.yaml
