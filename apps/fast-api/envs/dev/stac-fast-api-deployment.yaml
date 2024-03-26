@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app-elasticsearch
+  name: stac-fast-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: app-elasticsearch
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app-elasticsearch
+    spec:
+      containers:
+        - args:
+            - bash
+            - -c
+            - ./scripts/wait-for-it-es.sh elasticsearch-master:9200 && python -m stac_fastapi.elasticsearch.app
+          env:
+            - name: APP_HOST
+              value: 0.0.0.0
+            - name: APP_PORT
+              value: "8080"
+            - name: BACKEND
+              value: elasticsearch
+            - name: ENVIRONMENT
+              value: local
+            - name: ES_HOST
+              value: elasticsearch-master
+            - name: ES_PORT
+              value: "9200"
+            - name: ES_USE_SSL
+              value: "true"
+            - name: ES_VERIFY_CERTS
+              value: "false"
+            - name: ES_USER
+              value: "elastic"
+              # valueFrom:
+              #   secretKeyRef:
+              #     key: username
+              #     name: elasticsearch-master-credentials
+            - name: ES_PASS
+              value: "espassword"
+              # valueFrom:
+              #   secretKeyRef:
+              #     key: password
+              #     name: elasticsearch-master-credentials
+            - name: RELOAD
+              value: "true"
+            - name: STAC_FASTAPI_DESCRIPTION
+              value: A STAC FastAPI with an Elasticsearch backend
+            - name: STAC_FASTAPI_TITLE
+              value: stac-fastapi-elasticsearch
+            - name: STAC_FASTAPI_VERSION
+              value: "2.1"
+            - name: WEB_CONCURRENCY
+              value: "10"
+          image: tjellicoetpzuk/stac-fast-api:latest
+          name: stac-fastapi-es
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}

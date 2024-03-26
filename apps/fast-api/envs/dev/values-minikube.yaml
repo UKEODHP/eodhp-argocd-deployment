@@ -1,0 +1,55 @@
+---
+# Permit co-located instances for solitary minikube virtual machines.
+antiAffinity: "soft"
+
+## Username is elastic
+secret:
+  enabled: true
+  password: "espassword" # generated randomly if not defined
+
+# Allows you to add any config files in /usr/share/elasticsearch/config/
+# such as elasticsearch.yml and log4j2.properties
+esConfig:
+  elasticsearch.yml: |
+    ## Security
+    xpack.security.enabled: false
+    xpack.security.transport.ssl.enabled: false
+    xpack.security.enrollment.enabled: false
+    persistent:
+      cluster:
+        routing:
+          allocation.disk.threshold_enabled: false
+#     ## Cluster Settings
+#     cluster.name: stac-cluster
+#     node.name: es01
+#     network.host: 0.0.0.0
+#     transport.host: 0.0.0.0
+#     discovery.type: single-node
+#     http.port: 9200
+
+#     path:
+#       repo:
+#         - /usr/share/elasticsearch/snapshots
+
+#     ## License
+#     xpack.license.self_generated.type: basic
+
+# Shrink default JVM heap.
+esJavaOpts: "-Xmx128m -Xms128m"
+
+# Allocate smaller chunks of memory per pod.
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512M"
+  limits:
+    cpu: "1000m"
+    memory: "512M"
+
+# Request smaller persistent volumes.
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: "standard"
+  resources:
+    requests:
+      storage: 100M

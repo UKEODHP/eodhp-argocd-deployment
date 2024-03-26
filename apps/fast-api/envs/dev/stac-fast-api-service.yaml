@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app-elasticsearch
+  name: stac-fast-api-service
+spec:
+  ports:
+    - name: stac-fast-api
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.kompose.service: app-elasticsearch
+status:
+  loadBalancer: {}
