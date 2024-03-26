@@ -242,7 +242,7 @@ ingress:
         - dev.eodatahub.org.uk
       secretName: dev.eodatahub.org.uk-tls
 persistence:
-  procServicesStorageClass: block-storage
+  procServicesStorageClass: file-storage
   storageClass: file-storage
   tmpStorageClass: file-storage
 postgresql:
