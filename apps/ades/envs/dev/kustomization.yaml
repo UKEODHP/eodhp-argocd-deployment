@@ -89,7 +89,7 @@ patches:
         value: arn:aws:iam::312280911266:role/ADESProcessingManager-eodhp-dev-iTfh9VYd
   - target:
       kind: PersistentVolumeClaim
-      name: zoo-project-dru-processing-services
+      #name: zoo-project-dru-processing-services
     patch: |-
       - op: add
         path: /spec/persistentVolumeReclaimPolicy
