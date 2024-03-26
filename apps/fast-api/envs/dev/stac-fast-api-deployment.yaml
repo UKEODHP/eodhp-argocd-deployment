@@ -68,7 +68,7 @@ spec:
               value: "2.1"
             - name: WEB_CONCURRENCY
               value: "10"
-          image: tjellicoetpzuk/stac-fast-api:latest
+          image: public.ecr.aws/n1b3o1k2/eodhp-stac-fastapi:0.0.1
           name: stac-fastapi-es
           ports:
             - containerPort: 8080
