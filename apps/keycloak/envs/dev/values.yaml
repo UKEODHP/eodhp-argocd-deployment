@@ -38,7 +38,6 @@ keycloakConfigCli:
         "identityProviders": [
           {
             "alias": "github",
-            "internalId": "ecb8e623-5126-4f28-8199-e81ce6ee574a",
             "providerId": "github",
             "enabled": true,
             "updateProfileFirstLoginMode": "on",
