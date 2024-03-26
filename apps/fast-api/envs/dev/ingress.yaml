@@ -17,3 +17,7 @@ spec:
                 name: stac-fast-api-service
                 port:
                   number: 8080
+  tls:
+    - hosts:
+        - dev.eodatahub.org.uk
+      secretName: dev.eodatahub.org.uk-tls
