@@ -2,15 +2,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: fast-api-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
     - host: dev.eodatahub.org.uk
       http:
         paths:
-          - path: /stac-api(/|$)(.*)
+          - path: /stac-api
             pathType: ImplementationSpecific
             backend:
               service:
