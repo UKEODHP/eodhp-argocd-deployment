@@ -5,11 +5,12 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-    - host: "https://dev.eodatahub.org.uk/fast-api"
+    - host: dev.eodatahub.org.uk
       http:
         paths:
-          - path: /
+          - path: /fast-api/(.*)
             pathType: Prefix
             backend:
               service:
