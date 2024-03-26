@@ -69,4 +69,11 @@ patches:
       - op: add
         path: /metadata/annotations/eks.amazonaws.com~1role-arn
         value: arn:aws:iam::312280911266:role/ADESProcessingManager-eodhp-dev-iTfh9VYd
+  - target:
+      kind: PersistentVolumeClaim
+      name: zoo-project-dru-processing-services
+    patch: |-
+      - op: add
+        path: /spec/persistentVolumeReclaimPolicy
+        value: Retain
   - path: delete-pvc-patch.yaml
