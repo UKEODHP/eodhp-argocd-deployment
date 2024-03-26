@@ -220,7 +220,7 @@ workflow:
     STAGEOUT_AWS_SECRET_ACCESS_KEY: ""
   nodeSelector:
     minikube.k8s.io/primary: "true"
-  storageClass: file-storage
+  storageClass: file-storage-retain
 ingress:
   enabled: true
   annotations:
@@ -242,18 +242,18 @@ ingress:
         - dev.eodatahub.org.uk
       secretName: dev.eodatahub.org.uk-tls
 persistence:
-  procServicesStorageClass: file-storage
-  storageClass: file-storage
-  tmpStorageClass: file-storage
+  procServicesStorageClass: file-storage-retain
+  storageClass: file-storage-retain
+  tmpStorageClass: file-storage-retain
 postgresql:
   primary:
     persistence:
-      storageClass: block-storage
+      storageClass: block-storage-retain
   readReplicas:
     persistence:
-      storageClass: block-storage
+      storageClass: block-storage-retain
 rabbitmq:
   persistence:
-    storageClass: block-storage
+    storageClass: block-storage-retain
 iam:
   enabled: false
