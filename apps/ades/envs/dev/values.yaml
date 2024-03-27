@@ -1,6 +1,6 @@
 cookiecutter:
   templateUrl: https://github.com/UKEODHP/eoepca-proc-service-template.git
-  templateBranch: bugfix/add-service-account-for-results-output
+  templateBranch: master
 zoofpm:
   image:
     tag: eoepca-092ea7a2c6823dba9c6d52c383a73f5ff92d0762
@@ -245,6 +245,9 @@ persistence:
   procServicesStorageClass: file-storage-retain
   storageClass: file-storage-retain
   tmpStorageClass: file-storage-retain
+  # persistence:
+  # enabled: true
+  # existingProcServicesClaim:
 postgresql:
   primary:
     persistence:
