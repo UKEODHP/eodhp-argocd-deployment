@@ -1,5 +1,8 @@
 app_url: dev.eodatahub.org.uk
-image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.5-logTest1
+image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.5-logTest5
+
+environment:
+  name: dev
 
 database:
   sql_user: "admin"
@@ -20,5 +23,9 @@ catalogue_data:
 
 notebooks:
   url: https://dev.eodatahub.org.uk/apphub
+
+aws:
+  region: eu-west-2
+  static_s3_bucket: web-presence-static
 
 storage_class: block-storage

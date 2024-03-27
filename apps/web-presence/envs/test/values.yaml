@@ -1,5 +1,8 @@
 app_url: test.eodatahub.org.uk
-image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.5-logTest1
+image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.5-logTest5
+
+environment:
+  name: test
 
 database:
   sql_user: "admin"
@@ -17,5 +20,9 @@ resource_catalogue:
 
 catalogue_data:
   url: https://test.eodatahub.org.uk/catalogue-data/catalog.json
+
+aws:
+  region: eu-west-2
+  static_s3_bucket: web-presence-static
 
 storage_class: block-storage
