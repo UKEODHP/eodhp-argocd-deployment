@@ -30,6 +30,6 @@ patches:
       kind: Deployment
     patch: |-
       # Set TLS secret name
-      - op: replace
-        path: /spec/template/spec/containers/imagePullPolicy
+      - op: add
+        path: /spec/template/spec/containers/0/imagePullPolicy
         value: Always
