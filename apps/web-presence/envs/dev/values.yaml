@@ -21,4 +21,8 @@ catalogue_data:
 notebooks:
   url: https://dev.eodatahub.org.uk/apphub
 
+hosting:
+  allowed_hosts: '["https://dev.eodatahub.org.uk"]'
+  base_url: https://www.eodatahub.org.uk
+
 storage_class: block-storage
