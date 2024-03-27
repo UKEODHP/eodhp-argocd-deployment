@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.10.0
+
+- Add GitHub SSO
+
 ## v0.9.0
 
 - Added notebook link from web presence
