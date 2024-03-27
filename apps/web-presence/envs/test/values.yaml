@@ -1,5 +1,5 @@
 app_url: test.eodatahub.org.uk
-image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.5-logTest5
+image: public.ecr.aws/n1b3o1k2/eodhp-web-presence:0.1.5-logTest6
 
 environment:
   name: test
