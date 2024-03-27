@@ -11,10 +11,6 @@ secret:
 # such as elasticsearch.yml and log4j2.properties
 esConfig:
   elasticsearch.yml: |
-    ## Security
-    xpack.security.enabled: false
-    xpack.security.transport.ssl.enabled: false
-    xpack.security.enrollment.enabled: false
     cluster:
       routing:
         allocation.disk.threshold_enabled: false
