@@ -246,8 +246,8 @@ persistence:
   storageClass: file-storage-retain
   tmpStorageClass: file-storage-retain
   # persistence:
-  # enabled: true
-  # existingProcServicesClaim:
+  enabled: true
+  existingProcServicesClaim: zoo-project-dru-processing-services
 postgresql:
   primary:
     persistence:
