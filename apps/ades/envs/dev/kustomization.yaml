@@ -69,4 +69,4 @@ patches:
       - op: add
         path: /metadata/annotations/eks.amazonaws.com~1role-arn
         value: arn:aws:iam::312280911266:role/ADESProcessingManager-eodhp-dev-iTfh9VYd
-  #- path: delete-pvc-patch.yaml
+  - path: delete-pvc-patch.yaml
