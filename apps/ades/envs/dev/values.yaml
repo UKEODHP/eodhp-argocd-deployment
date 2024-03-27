@@ -247,7 +247,7 @@ persistence:
   tmpStorageClass: file-storage-retain
   # persistence:
   enabled: true
-  existingProcServicesClaim: zoo-project-dru-processing-services
+  existingProcServicesClaim: ades/zoo-project-dru-processing-services
 postgresql:
   primary:
     persistence:
