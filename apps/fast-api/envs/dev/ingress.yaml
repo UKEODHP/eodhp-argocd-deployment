@@ -5,10 +5,10 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: dev.eodatahub.org.uk/stac-api
+    - host: dev.eodatahub.org.uk
       http:
         paths:
-          - path: /
+          - path: /stac-api/(.*)
             pathType: ImplementationSpecific
             backend:
               service:
