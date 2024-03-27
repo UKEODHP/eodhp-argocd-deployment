@@ -11,7 +11,7 @@ helmCharts:
   - name: eodhp-web-presence
     repo: oci://public.ecr.aws/n1b3o1k2/helm
     releaseName: web-presence
-    version: 0.1.4
+    version: 0.1.5
     valuesFile: values.yaml
     namespace: web
 
@@ -26,3 +26,10 @@ patches:
           - hosts: 
               - dev.eodatahub.org.uk
             secretName: dev.eodatahub.org.uk-tls
+  - target:
+      kind: Deployment
+    patch: |-
+      # Set TLS secret name
+      - op: add
+        path: /spec/template/spec/containers/0/imagePullPolicy
+        value: Always
