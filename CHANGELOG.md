@@ -1,8 +1,11 @@
 # Change Log
 
-## v0.10.0
+## v0.11.0
 
 - Added Wagtail configuration environment variables
+
+## v0.10.0
+- Add GitHub SSO
 
 ## v0.9.0
 
